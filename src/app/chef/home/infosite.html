@@ -1,0 +1,1545 @@
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header" style="border: 1px solid #f59102;padding:0px;">
+        <i class="fa fa-clock-o " style="background: #f59102;color: white;padding: 0.75rem 1.25rem; font-size: 20px"></i>
+        PRISE DE POSTE
+        <div style="float: right; transform: translateX(-10px)translateY(5px);">
+          <button type="button" class="btn btn-danger btn-sm" (click)="openAccecEntre();myModalEntreAgentSiteAbson.open();"> {{ 'ADMIN.Entrée' | translate }} <i class="icon-arrow-down-circle icons"></i></button>
+          <button type="button" class="btn btn-success btn-sm" (click)="myModalSortiAgentSitePreson.open();">{{ 'ADMIN.Sortie' | translate }} <i class="icon-arrow-up-circle icons"></i></button>
+        </div>
+
+      </div>
+      <div >
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th></th>
+            <th>Agents  <i class="icon-arrow-down-circle icons" style="color: red;"></i> </th>
+
+            <th>Clés  <i class="icon-arrow-down-circle icons" style="color: red;"></i></th>
+
+            <th> Matériel <i class="icon-arrow-down-circle icons" style="color: red;"></i></th>
+
+          </tr>
+          </thead>
+          <tbody>
+
+
+          <tr>
+            <td> <span style="font-weight: bold;"> Agents </span> </td>
+            <td>
+              {{nbrAgentsSitePreson}}
+
+              <button  data-last="Finish" (click)="myModalAgentSitePreson.open();" >
+                <i class="icon-user icons" style="color: red;"></i>
+              </button>
+            </td>
+
+            <td> {{cleEntre}}
+
+              <button  data-last="Finish" (click)="getMateriellesAcces('In','Cle','Agent'); myModalInfoMatrielles.open();" >
+                <i class="icon-key icons" style="color: red;"></i>
+              </button>
+
+            </td>
+
+            <td> {{matEntre}}
+              <button  data-last="Finish" (click)="getMateriellesAcces('In','Materielle','Agent'); myModalInfoMatrielles.open();" >
+                <i class="icon-briefcase icons" style="color: red;"></i>
+              </button>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row row col-lg-12">
+
+        <div class="col-xs-6 col-lg-4">
+          <div class="card">
+            <div class="card-block p-a-1 clearfix">
+              <i class="fa bg-info icon-people p-a-2 font-2xl m-r-1 pull-left" style="padding: 1rem 1rem;"></i>
+              <div class="h5 text-info m-b-0 m-t-h">{{nbrAgentsSite}}</div>
+              <div class="font-weight-bold font-xs">Pool d’agents</div>
+              <progress class="progress-xs progress-info m-t-1 m-b-0" max="{{nbrAgentsSite}}" value="{{nbrAgentsSite}}" style="width: 100%;">25%</progress>
+            </div>
+            <div class="card-footer p-x-1 p-y-h">
+              <a class="font-weight-bold font-xs btn-block text-muted"(click)="myModalAgentSite.open();"> {{ 'ADMIN.View More' | translate }}
+                <i class="fa fa-angle-right pull-right font-lg"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6 col-lg-4">
+          <div class="card">
+            <div class="card-block p-a-1 clearfix">
+              <i class="fa  bg-primary icon-people p-a-2 font-2xl m-r-1 pull-left" style="padding: 1rem 1rem;"></i>
+              <div class="h5 text-primary m-b-0 m-t-h">{{nbrAgentsSitePreson}}</div>
+              <div class="font-weight-bold font-xs">Agents présents </div>
+              <progress class="progress-xs progress-info m-t-1 m-b-0" max="{{nbrAgentsSite}}" value="{{nbrAgentsSitePreson}}" style="width: 100%;">25%</progress>
+            </div>
+            <div class="card-footer p-x-1 p-y-h">
+              <a class="font-weight-bold font-xs btn-block text-muted" (click)="myModalAgentSitePreson.open();">{{ 'ADMIN.View More' | translate }} <i class="fa fa-angle-right pull-right font-lg"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6 col-lg-4">
+          <div class="card">
+            <div class="card-block p-a-1 clearfix">
+              <i class="fa bg-warning  icon-people p-a-2 font-2xl m-r-1 pull-left" style="padding: 1rem 1rem;"></i>
+              <div class="h5 text-warning m-b-0 m-t-h">{{nbrAgentsSiteAbson}}</div>
+              <div class="font-weight-bold font-xs">Agents disponibles</div>
+              <progress class="progress-xs progress-info m-t-1 m-b-0" max="{{nbrAgentsSite}}" value="{{nbrAgentsSiteAbson}}" style="width: 100%;">25%</progress>
+            </div>
+            <div class="card-footer p-x-1 p-y-h">
+              <a class="font-weight-bold font-xs btn-block text-muted" (click)="openAgentSiteAbson();myModalAgentSiteAbson.open();">{{ 'ADMIN.View More' | translate }} <i class="fa fa-angle-right pull-right font-lg"></i></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+<modal #myModalInfoMatrielles modalClass="modal-lg" >
+  <modal-header>
+  </modal-header>
+  <modal-content>
+
+    <div class="center"  *ngIf="materiellesAcces">
+
+      <div class='table-responsive'>
+        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+          <thead>
+          <tr>
+
+            <th class="text-center"><i class="icon-people"></i></th>
+
+            <th>{{ 'ADMIN.Nom' | translate }}</th>
+            <th>{{ 'ADMIN.Code' | translate }}</th>
+            <th><i class="ace-icon fa fa-clock-o bigger-110"></i>{{ 'ADMIN.Date' | translate }}</th>
+            <th>{{ 'ADMIN.res' | translate }}</th>
+
+            <th>{{ 'ADMIN.Etat' | translate }}</th>
+
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr  *ngFor='let matrielle of materiellesAcces' >
+            <td class="text-center">
+              <div class="avatar" *ngIf="matrielle.type=='Materielle'">
+
+                <img src="/assets/public/materielle/materielle.jpg" class="img-avatar" >
+                <span class="avatar-status badge-success"></span>
+              </div>
+              <div class="avatar" *ngIf="matrielle.type=='Cle'">
+                <img src="/assets/public/materielle/cle.png" class="img-avatar" >
+                <span class="avatar-status badge-success"></span>
+              </div>
+            </td>
+
+
+            <td>{{ matrielle.objetType.name}}</td>
+            <td>
+              <div class="">
+                <a target="_blank" href="/assets/public/codeBar/{{matrielle.objetType.photoCodeBar}}" *ngIf="matrielle.objetType.photoCodeBar64">
+                  <img src="/assets/public/codeBar/{{matrielle.objetType.photoCodeBar}}" class="" alt="{{ matrielle.codeBar}}" >
+                </a>
+                <span style="visibility: hidden;font-size: 0px;">{{matrielle.objetType.codeBar}}</span>
+
+                <span class="avatar-status badge-success"></span>
+              </div>
+
+            </td>
+            <td>{{ matrielle.objetType.dateCreation}}</td>
+
+            <td>{{ matrielle.typeAcces}}: {{ matrielle.acces.agent.nom}} {{ matrielle.acces.agent.prenom}}</td>
+
+            <td>
+              <span *ngIf="matrielle.etat=='Out'" class="label label-sm label-success">{{ 'ADMIN.Actif' | translate }}</span>
+              <span  *ngIf="matrielle.etat=='In'" class="label label-sm label-warning">{{ 'ADMIN.Reserver' | translate }}</span>
+
+
+            </td>
+
+
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModalInfoMatrielles.close()">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+<modal #myModalInfoAcces modalClass="modal-lg" >
+  <modal-header>
+  </modal-header>
+  <modal-content>
+
+    <div class="center">
+      <div class='table-responsive'>
+        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+          <thead>
+          <tr>
+
+            <th>{{ 'ADMIN.Nom' | translate }}</th>
+
+            <th>{{ 'ADMIN.Date' | translate }}</th>
+            <th>{{ 'ADMIN.Heure' | translate }}</th>
+            <th>{{ 'ADMIN.Etat' | translate }}</th>
+
+
+
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr  *ngFor='let use of activitesAcces' >
+
+            <td> {{ use.agent.nom}} {{ use.agent.prenom}}</td>
+
+            <td>{{ use.date}}</td>
+            <td> {{ use.heure}} </td>
+            <td>
+              <span class="btn btn-success btn-sm" *ngIf="use.type=='Sortie'">{{ 'ADMIN.Sortie' | translate }} <i class="icon-arrow-up-circle icons"></i></span>
+              <span class="btn btn-danger btn-sm" *ngIf="use.type=='Entrée'">{{ 'ADMIN.Entrée' | translate }} <i class="icon-arrow-down-circle icons"></i></span>
+            </td>
+
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModalInfoAcces.close()">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+<modal #myModalinfoSite modalClass="modal-lg" >
+  <modal-header>
+    <h1>{{ 'ADMIN.Info site' | translate }}</h1>
+  </modal-header>
+  <modal-content>
+
+    <div class="center">
+      <h3 class="blue lighter">{{ 'ADMIN.Info site' | translate }}</h3>
+
+
+      <div class="form-group row">
+
+        <div class="col-md-6">
+
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Nom' | translate }} </div>
+              <div class="profile-info-value">
+                <span class="editable editable-click" id="name">{{userActuelle.site.name}}</span>
+              </div>
+            </div>
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Code' | translate }}</div>
+              <div class="profile-info-value">
+
+                <span class="editable editable-click" id="code">{{userActuelle.site.code}}</span>
+              </div>
+            </div>
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Adresse' | translate }} </div>
+              <div class="profile-info-value">
+
+                <span class="editable editable-click" id="adresse">{{userActuelle.site.adresse}}</span>
+              </div>
+            </div>
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Nom client' | translate }} </div>
+              <div class="profile-info-value">
+
+                <span class="editable editable-click" id="NomClien">{{userActuelle.site.client.nom}} {{userActuelle.site.client.prenom}}</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="col-md-6">
+
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Ville' | translate }}</div>
+              <div class="profile-info-value">
+
+                <span class="editable editable-click" id="ville">{{userActuelle.site.ville}}</span>
+              </div>
+            </div>
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Fax' | translate }}</div>
+              <div class="profile-info-value">
+
+                <span class="editable editable-click" id="fax">{{userActuelle.site.fax}}</span>
+              </div>
+            </div>
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Tel' | translate }}</div>
+              <div class="profile-info-value">
+                <span class="editable editable-click" id="tel">{{userActuelle.site.tel}}</span>
+              </div>
+            </div>
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Tel client' | translate }}</div>
+              <div class="profile-info-value">
+                <span class="editable editable-click" id="telClient">{{userActuelle.site.client.tel}}</span>
+              </div>
+            </div>
+
+
+          </div>
+
+
+
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModalinfoSite.close();">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+<modal #myModalAgentSite modalClass="modal-lg" >
+  <modal-header>
+    <h1>list agents</h1>
+  </modal-header>
+  <modal-content>
+
+    <div class="center">
+
+      <div class="col-md-12">
+
+        <div class='table-responsive'>
+          <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+
+              <th class="text-center"><i class="icon-people"></i></th>
+              <th>{{ 'ADMIN.Nom' | translate }}</th>
+              <th>{{ 'ADMIN.Prenom' | translate }}</th>
+              <th><i>@</i>{{ 'ADMIN.Email' | translate }}</th>
+              <th>{{ 'ADMIN.Telephone' | translate }}</th>
+
+              <th>{{ 'ADMIN.Etat' | translate }}</th>
+              <th>{{ 'ADMIN.Print badge' | translate }}</th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr  *ngFor='let use of listAgentsSite' >
+              <td class="text-center">
+                <div class="avatar">
+                  <img  class="img-avatar" alt="{{ use.Agent.mail}}" src="/assets/public/avatar/{{use.Agent.photo}}" *ngIf="use.Agent.photo">
+                  <img  class="img-avatar" alt="{{ use.Agent.mail}}" src="/assets/public/avatar/avatar.png" *ngIf="!use.Agent.photo">
+                  <span class="avatar-status badge-success"></span>
+                </div>
+              </td>
+
+              <td>{{ use.Agent.nom}}</td>
+              <td>{{ use.Agent.prenom}}</td>
+              <td>{{ use.Agent.mail}}</td>
+              <td>{{ use.Agent.tel}}</td>
+
+              <td>
+                <span *ngIf="use.Agent.etat=='Actif'" class="label label-sm label-success">{{ 'ADMIN.'+use.Agent.etat | translate }}</span>
+                <span  *ngIf="use.Agent.etat=='InActif'" class="label label-sm label-warning">{{ 'ADMIN.'+use.Agent.etat | translate }}</span>
+              </td>
+              <td>
+                <button type="button" class="btn btn-success btn-sm"
+                        (click)="myModalBadgeAgent.open();infoBadgeAgent(use.Agent);myModalAgentSite.close();">
+                  {{ 'ADMIN.print' | translate }} <i class="icon-printer icons"></i>
+                </button>
+              </td>
+
+
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+
+      </div>
+
+
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModalAgentSite.close();">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+<modal #myModalAgentSitePreson modalClass="modal-lg" >
+  <modal-header>
+    <h1>{{ 'ADMIN.Agents présents' | translate }} :</h1>
+  </modal-header>
+  <modal-content>
+
+    <div class="center">
+      <h3 class="blue lighter">{{ 'ADMIN.Agents présents' | translate }} :</h3>
+      <div class="col-md-12">
+
+        <div class='table-responsive'  *ngIf="!isModifAcces">
+          <table id="example2" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+
+              <th class="text-center"><i class="icon-people"></i></th>
+              <th>{{ 'ADMIN.Code' | translate }}</th>
+              <th>{{ 'ADMIN.Nom' | translate }}</th>
+              <th>{{ 'ADMIN.Prenom' | translate }}</th>
+              <th><i>@</i>{{ 'ADMIN.Email' | translate }}</th>
+              <th>{{ 'ADMIN.Telephone' | translate }}</th>
+              <th>{{ 'ADMIN.Type' | translate }}</th>
+              <th>{{ 'ADMIN.Poste' | translate }}</th>
+              <th>Shift</th>
+              <th>{{ 'ADMIN.Action' | translate }}</th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr  *ngFor='let use of listAgentsSitePreson' >
+              <td class="text-center">
+                <div class="avatar">
+                  <img  class="img-avatar" src="/assets/public/avatar/{{use.Agent.photo}}" *ngIf="use.Agent.photo">
+                  <img  class="img-avatar" src="/assets/public/avatar/avatar.png" *ngIf="!use.Agent.photo">
+                  <span class="avatar-status badge-success"></span>
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  <a target="_blank" href="/assets/public/codeBar/{{ use.Agent.photoCodeBar}}" *ngIf=" use.Agent.photoCodeBar64">
+                    <img src="/assets/public/codeBar/{{ use.Agent.photoCodeBar}}" class="" alt="{{  use.Agent.codeBar}}" >
+                  </a>
+                  <span style="visibility: hidden;font-size: 0px;">{{ use.Agent.codeBar}}</span>
+
+                  <span class="avatar-status badge-success"></span>
+                </div>
+
+              </td>
+
+              <td>{{ use.Agent.nom}}</td>
+              <td>{{ use.Agent.prenom}}</td>
+              <td>{{ use.Agent.mail}}</td>
+              <td>{{ use.Agent.tel}}</td>
+
+              <td>{{ use.type}}</td>
+              <td>
+                <div *ngIf="use.poste">
+                  {{ use.poste.name}}
+                </div>
+
+              </td>
+
+              <td>
+                <div *ngIf="use.shift">
+                  {{ use.shift.nom}}
+                </div>
+
+              </td>
+
+              <td>
+
+                <button type="button" class="green" (click)="openedEditAcces(use);"  >
+                  <i class="ace-icon fa fa-pencil bigger-130"></i>
+                </button>
+
+              </td>
+
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-xs-12" *ngIf="isModifAcces">
+
+
+          <div class="form-group row col-xs-12">
+            <div class="col-md-6" >
+              <div class="profile-user-info profile-user-info-striped">
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Email' | translate }} </div>
+
+                  <div class="profile-info-value">
+                    <span>
+                      {{accesModif.agent.mail}}
+                    </span>
+
+
+                  </div>
+                </div>
+
+
+
+                <div class="profile-info-row" >
+                  <div class="profile-info-name"> {{ 'ADMIN.Nom' | translate }} </div>
+
+                  <div class="profile-info-value">
+
+                    <span>
+                      {{accesModif.agent.nom}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="profile-info-row" >
+                  <div class="profile-info-name"> {{ 'ADMIN.Prenom' | translate }} </div>
+
+                  <div class="profile-info-value">
+
+
+                     <span>
+                      {{accesModif.agent.prenom}}
+                    </span>
+
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="col-xs-12">
+            <div class="col-xs-12">
+              <div class="card">
+                <div class="card-header">
+                  <strong>Reservation Materiel </strong>
+
+
+                  <div class="card-actions">
+                    <button aria-controls="collapseExample" aria-expanded="false" class="btn-minimize" data-target="" data-toggle="collapse" type="button" (click)="openresMatEdit();">
+                      <i class="icon-arrow-up" *ngIf="isopenMatEdit"></i>
+                      <i class="icon-arrow-down" *ngIf="!isopenMatEdit"></i>
+                    </button>
+
+                  </div>
+                </div>
+                <div class="card-block" *ngIf="isopenMatEdit">
+                  <div class="center">
+                    <h3 class="blue lighter">Choisir des Matériels </h3>
+
+                    <div class="row" *ngIf="isListeMateriellesEdit">
+                      <div class="col-md-12">
+
+                        <div class='table-responsive'>
+                          <table  id="example2"  class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                              <th class="text-center"><i class="icon-people"></i></th>
+                              <th>{{ 'ADMIN.Nom' | translate }}</th>
+                              <th>{{ 'ADMIN.Code' | translate }}</th>
+                              <th>{{ 'ADMIN.Action' | translate }}</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                              <th></th>
+
+                              <th>{{ 'ADMIN.Nom' | translate }}</th>
+                              <th>{{ 'ADMIN.Code' | translate }}</th>
+                              <th></th>
+
+
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr  *ngFor='let matrielle of materielles; let i = index' >
+                              <td class="text-center">
+                                <div class="avatar">
+                                  <img src="/assets/public/materielle/{{matrielle.photo}}" class="img-avatar"  *ngIf="matrielle.photo">
+                                  <img src="/assets/public/materielle/materielle.jpg" class="img-avatar"   *ngIf="!matrielle.photo">
+                                  <span class="avatar-status badge-success"></span>
+                                </div>
+                              </td>
+
+
+                              <td>{{ matrielle.name}}</td>
+                              <td>
+                                <div class="">
+                                  <a target="_blank" href="/assets/public/codeBar/{{matrielle.photoCodeBar}}" *ngIf="matrielle.photoCodeBar64">
+                                    <img src="/assets/public/codeBar/{{matrielle.photoCodeBar}}" class="" alt="{{ matrielle.codeBar}}" >
+                                  </a>
+                                  <span style="visibility: hidden;font-size: 0px;">{{matrielle.codeBar}}</span>
+
+                                  <span class="avatar-status badge-success"></span>
+                                </div>
+
+                              </td>
+                              <td>
+
+
+
+
+                                <input  type="checkbox" #{{matrielle._id}}   #cvm
+                                        (change)="checkboxmatEdit(matrielle,accesModif,cvm.checked,i)" *ngIf="!in_array(matrielle._id,historiqueAccesMatModif)">
+
+
+                                <input  type="checkbox" #{{matrielle._id}}   #cvm
+                                        checked
+                                        (change)="checkboxmatEdit(matrielle,accesModif,cvm.checked,i)" *ngIf="in_array(matrielle._id,historiqueAccesMatModif)">
+
+
+
+                              </td>
+                            </tr>
+
+                            </tbody>
+                          </table>
+                        </div>
+
+
+
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-xs-12">
+            <div class="col-xs-12">
+              <div class="card">
+                <div class="card-header">
+                  <strong>Reservation cles </strong>
+                  <div class="card-actions">
+
+                    <button aria-controls="collapseExample" aria-expanded="false" class="btn-minimize" data-target="" data-toggle="collapse" type="button" (click)=" openrescleEdit();">
+                      <i class="icon-arrow-up" *ngIf="isopenCleEdit"></i>
+                      <i class="icon-arrow-down" *ngIf="!isopenCleEdit"></i>
+                    </button>
+
+                  </div>
+                </div>
+                <div class="card-block"  *ngIf="isopenCleEdit">
+                  <div class="center">
+                    <h3 class="blue lighter">Choisir des clés </h3>
+
+                    <div class="row" *ngIf="isListeClesEdit">
+                      <div class="col-md-12">
+
+                        <div class='table-responsive'>
+                          <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+
+
+                              <th>{{ 'ADMIN.Nom' | translate }}</th>
+                              <th>{{ 'ADMIN.Code' | translate }}</th>
+                              <th>{{ 'ADMIN.Action' | translate }}</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+
+                              <th>{{ 'ADMIN.Nom' | translate }}</th>
+                              <th>{{ 'ADMIN.Code' | translate }}</th>
+                              <th>{{ 'ADMIN.Action' | translate }}</th>
+
+
+
+                            </tr>
+                            </tfoot>
+
+                            <tbody>
+                            <tr  *ngFor='let cle of cles; let i = index' >
+
+
+
+                              <td>{{ cle.name}}</td>
+                              <td>
+                                <div class="">
+                                  <a target="_blank" href="/assets/public/codeBar/{{cle.photoCodeBar}}" *ngIf="cle.photoCodeBar64">
+                                    <img src="/assets/public/codeBar/{{cle.photoCodeBar}}" class="" alt="{{ cle.codeBar}}" >
+                                  </a>
+                                  <span style="visibility: hidden;font-size: 0px;">{{cle.codeBar}}</span>
+
+                                  <span class="avatar-status badge-success"></span>
+                                </div>
+
+                              </td>
+                              <td>
+
+
+                                <input  type="checkbox" #{{cle._id}}    #cvm
+                                        (change)="checkboxCleEdit(cle,accesModif,cvm.checked,i)" *ngIf="!in_array(cle._id,historiqueAccesCleModif)">
+
+
+                                <input  type="checkbox" #{{cle._id}}    #cvm
+                                        checked
+                                        (change)="checkboxCleEdit(cle,accesModif,cvm.checked,i)" *ngIf="in_array(cle._id,historiqueAccesCleModif)">
+
+
+                              </td>
+                            </tr>
+
+                            </tbody>
+                          </table>
+                        </div>
+
+
+
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="closeEditAccesAgent();myModalAgentSitePreson.close();">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+<modal #myModalAgentSiteAbson modalClass="modal-lg" >
+  <modal-header>
+    <h1>{{ 'ADMIN.Agents absents' | translate }}</h1>
+  </modal-header>
+  <modal-content>
+
+    <div class="center">
+      <h3 class="blue lighter">{{ 'ADMIN.Agents absents' | translate }} :</h3>
+      <div class="col-md-12" *ngIf="!isAddEntre">
+
+        <div class='table-responsive'>
+          <table id="example3" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+
+              <th class="text-center"><i class="icon-people"></i></th>
+              <th>{{ 'ADMIN.Nom' | translate }}</th>
+              <th>{{ 'ADMIN.Prenom' | translate }}</th>
+              <th><i>@</i>{{ 'ADMIN.Email' | translate }}</th>
+              <th>{{ 'ADMIN.Telephone' | translate }}</th>
+
+              <th>{{ 'ADMIN.Poste' | translate }}</th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr  *ngFor='let use of listAgentsSiteAbson' >
+              <td class="text-center">
+                <div class="avatar">
+                  <img  class="img-avatar" alt="{{ use.Agent.mail}}" src="/assets/public/avatar/{{use.Agent.photo}}" *ngIf="use.Agent.photo">
+                  <img  class="img-avatar" alt="{{ use.Agent.mail}}" src="/assets/public/avatar/avatar.png" *ngIf="!use.Agent.photo">
+                  <span class="avatar-status badge-success"></span>
+                </div>
+              </td>
+
+              <td>{{ use.Agent.nom}}</td>
+              <td>{{ use.Agent.prenom}}</td>
+              <td>{{ use.Agent.mail}}</td>
+              <td>{{ use.Agent.tel}}</td>
+              <td>{{ use.type}}</td>
+
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+
+      </div>
+
+      <div class="col-md-12" *ngIf="isAddEntre">
+        <div class="form-group row">
+          <div class="col-md-6">
+            <div class="profile-user-info profile-user-info-striped">
+
+              <div class="profile-info-row">
+                <div class="profile-info-name">{{ 'ADMIN.Photo' | translate }} </div>
+
+                <div class="profile-info-value">
+              <span class="editable" id="Photo">
+
+
+                 <img style="max-width: 300px;" id="avatar" class="editable img-responsive" alt="{{ user.mail}}" src="/assets/public/avatar/{{user.photo}}" *ngIf="user.photo" />
+                 <img id="avatar" class="editable img-responsive" alt="{{ user.mail}}" src="/assets/public/avatar/avatar.png" *ngIf="!user.photo">
+
+              </span>
+                </div>
+              </div>
+              <div class="profile-info-row">
+                <div class="profile-info-name">Login </div>
+
+                <div class="profile-info-value">
+                  <span class="editable" id="username">{{ user.login}}</span>
+                </div>
+              </div>
+              <div class="profile-info-row">
+                <div class="profile-info-name">{{ 'ADMIN.Nom' | translate }} </div>
+
+                <div class="profile-info-value">
+                  <span class="editable" id="nom">{{ user.nom}} {{ user.prenom}}</span>
+                </div>
+              </div>
+
+
+            </div>
+
+            <!-- /section:pages/profile.info -->
+
+
+          </div>
+          <div class="col-md-6">
+
+
+            <div class="profile-user-info profile-user-info-striped">
+
+              <form  [formGroup]="addEntreForm" (ngSubmit)="addEntreAgent(user)"  *ngIf="!alertsSuccess">
+
+              <div class="profile-info-row">
+                <div class="profile-info-name"> {{ 'ADMIN.Heure' | translate }} </div>
+
+                <div class="profile-info-value">
+
+                  <input class="form-control" type="time" [ngModel]="datexxxxx | date:'HH:mm'" formControlName="heure"   >
+                </div>
+              </div>
+
+              <div class="profile-info-row">
+                <div class="profile-info-name"> {{ 'ADMIN.Poste Agent' | translate }} </div>
+
+                <div class="profile-info-value" style="width: 100%;">
+
+                  <select class="form-control "  formControlName="poste">
+                    <option *ngFor="let poste of postes" [ngValue]="poste">{{poste.name}}</option>
+                  </select>
+
+                </div>
+              </div>
+
+                <div class="col-md-12" style="text-align: right;" >
+                  <button class="btn btn-success" type="submit" [disabled]="!addEntreForm.valid"><i class="fa fa-floppy-o"></i>
+                    {{ 'ADMIN.Enregistrer' | translate }}
+                  </button>
+                </div>
+              </form>
+
+
+            </div>
+
+
+
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModalAgentSiteAbson.close();">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+<modal #myModalEntreAgentSiteAbson modalClass="modal-lg" >
+  <modal-header>
+    <h1>Entree</h1>
+  </modal-header>
+  <modal-content>
+
+    <div class="center">
+
+      <div class="col-md-12" *ngIf="!isAddEntre">
+
+        <div class='table-responsive'>
+          <table id="example3" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+
+              <th class="text-center"><i class="icon-people"></i></th>
+              <th>{{ 'ADMIN.Nom' | translate }}</th>
+              <th>{{ 'ADMIN.Prenom' | translate }}</th>
+              <th><i>@</i>{{ 'ADMIN.Email' | translate }}</th>
+              <th>{{ 'ADMIN.Telephone' | translate }}</th>
+
+              <th>{{ 'ADMIN.Poste' | translate }}</th>
+
+              <th>{{ 'ADMIN.Action' | translate }}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr  *ngFor='let use of listAgentsSiteAbson' >
+              <td class="text-center">
+                <div class="avatar">
+                  <img  class="img-avatar"  src="/assets/public/avatar/{{use.Agent.photo}}" *ngIf="use.Agent.photo">
+                  <img  class="img-avatar"  src="/assets/public/avatar/avatar.png" *ngIf="!use.Agent.photo">
+                  <span class="avatar-status badge-success"></span>
+                </div>
+              </td>
+
+              <td>{{ use.Agent.nom}}</td>
+              <td>{{ use.Agent.prenom}}</td>
+              <td>{{ use.Agent.mail}}</td>
+              <td>{{ use.Agent.tel}}</td>
+
+
+              <td>{{ use.type}}</td>
+
+
+
+              <td>
+
+                <button type="button" class="btn btn-danger btn-sm" (click)="actionEntreAgent(use.Agent);">
+                  {{ 'ADMIN.Entrée' | translate }}
+                  <i class="icon-arrow-down-circle icons"></i>
+                </button>
+
+
+              </td>
+
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+
+      </div>
+
+
+
+      <div class="col-md-12" *ngIf="isAddEntre">
+        <form  [formGroup]="addEntreForm" (ngSubmit)="addEntreAgent(user)"  *ngIf="!alertsSuccess">
+        <div class="form-group row">
+
+          <div class="col-md-6">
+            <div class="profile-user-info profile-user-info-striped">
+
+              <div class="profile-info-row">
+                <div class="profile-info-name">{{ 'ADMIN.Photo' | translate }} </div>
+
+                <div class="profile-info-value">
+              <span class="editable" id="Photo">
+
+
+                 <img style="max-width: 300px;" id="avatar" class="editable img-responsive"  src="/assets/public/avatar/{{user.photo}}" *ngIf="user.photo" />
+                 <img id="avatar" class="editable img-responsive"  src="/assets/public/avatar/avatar.png" *ngIf="!user.photo">
+
+              </span>
+                </div>
+              </div>
+              <div class="profile-info-row">
+                <div class="profile-info-name">Login </div>
+
+                <div class="profile-info-value">
+                  <span class="editable" id="username">{{ user.login}}</span>
+                </div>
+              </div>
+              <div class="profile-info-row">
+                <div class="profile-info-name">{{ 'ADMIN.Nom' | translate }} </div>
+
+                <div class="profile-info-value">
+                  <span class="editable" id="nom">{{ user.nom}} {{ user.prenom}}</span>
+                </div>
+              </div>
+              <div class="profile-info-row">
+                <div class="profile-info-name">{{ 'ADMIN.Email' | translate }} </div>
+
+                <div class="profile-info-value">
+                  <span class="editable" id="nom">{{ user.email}} </span>
+                </div>
+              </div>
+
+
+            </div>
+
+            <!-- /section:pages/profile.info -->
+
+
+          </div>
+          <div class="col-md-6">
+
+
+            <div class="profile-user-info profile-user-info-striped">
+
+
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name"> {{ 'ADMIN.Heure' | translate }} </div>
+
+                  <div class="profile-info-value">
+
+                    <input class="form-control" type="time" [ngModel]="datexxxxx | date:'HH:mm'" formControlName="heure"   >
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name"> {{ 'ADMIN.Poste Agent' | translate }} </div>
+
+                  <div class="profile-info-value" style="width: 100%;">
+
+                    <select class="form-control "  formControlName="poste">
+                      <option *ngFor="let poste of postes" [ngValue]="poste">{{poste.name}}</option>
+                    </select>
+
+                  </div>
+                </div>
+
+
+              <div class="profile-info-row">
+                <div class="profile-info-name"> Shift </div>
+
+                <div class="profile-info-value" style="width: 100%;">
+
+                  <select class="form-control "  formControlName="shift">
+                    <option *ngFor="let x of Listshifts"  [ngValue]="x">{{x.nom}} : {{x.debut}} - {{x.fin}}</option>
+                  </select>
+
+                </div>
+              </div>
+
+
+
+
+
+
+            </div>
+
+
+
+          </div>
+
+        </div>
+        <div class="col-xs-12">
+          <div class="col-xs-12">
+            <div class="card">
+              <div class="card-header">
+                <strong>Reservation MATERIEL</strong>
+
+
+                <div class="card-actions">
+                  <button aria-controls="collapseExample" aria-expanded="false" class="btn-minimize" data-target="" data-toggle="collapse" type="button" (click)="openresMat();">
+                    <i class="icon-arrow-up" *ngIf="isopenMat"></i>
+                    <i class="icon-arrow-down" *ngIf="!isopenMat"></i>
+                  </button>
+
+                </div>
+              </div>
+              <div class="card-block" *ngIf="isopenMat">
+                <div class="center">
+                  <h3 class="blue lighter">Choisir des matérielle</h3>
+
+                  <div class="row" *ngIf="isListeMaterielles">
+                    <div class="col-md-12">
+
+                      <div class='table-responsive'>
+                        <table  class="table table-striped table-bordered" cellspacing="0" width="100%">
+                          <thead>
+                          <tr>
+
+                            <th class="text-center"><i class="icon-people"></i></th>
+                            <th>{{ 'ADMIN.Nom' | translate }}</th>
+                            <th>{{ 'ADMIN.Code' | translate }}</th>
+                            <th>{{ 'ADMIN.Action' | translate }}</th>
+                          </tr>
+                          </thead>
+                          <tfoot>
+                          <tr>
+                            <th></th>
+
+                            <th>{{ 'ADMIN.Nom' | translate }}</th>
+                            <th>{{ 'ADMIN.Code' | translate }}</th>
+                            <th></th>
+
+
+                          </tr>
+                          </tfoot>
+                          <tbody>
+                          <tr  *ngFor='let matrielle of materielles; let i = index' >
+                            <td class="text-center">
+                              <div class="avatar">
+                                <img src="/assets/public/materielle/{{matrielle.photo}}" class="img-avatar" alt="{{ matrielle.name}}" *ngIf="matrielle.photo">
+                                <img src="/assets/public/materielle/materielle.jpg" class="img-avatar" alt="{{ matrielle.name}}"  *ngIf="!matrielle.photo">
+                                <span class="avatar-status badge-success"></span>
+                              </div>
+                            </td>
+
+
+                            <td>{{ matrielle.name}}</td>
+                            <td>
+                              <div class="">
+                                <a target="_blank" href="/assets/public/codeBar/{{matrielle.photoCodeBar}}" *ngIf="matrielle.photoCodeBar64">
+                                  <img src="/assets/public/codeBar/{{matrielle.photoCodeBar}}" class="" alt="{{ matrielle.codeBar}}" >
+                                </a>
+                                <span style="visibility: hidden;font-size: 0px;">{{matrielle.codeBar}}</span>
+
+                                <span class="avatar-status badge-success"></span>
+                              </div>
+
+                            </td>
+                            <td>
+
+
+                              <input #{{matrielle._id}} formControlName="cheke" [(ngModel)]="matrielle.selected" #cvm
+                                     [checked]=false type="checkbox" (change)="checkboxmat(matrielle,cvm.checked,i)">
+
+
+
+                            </td>
+                          </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+
+
+
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xs-12">
+          <div class="col-xs-12">
+            <div class="card">
+              <div class="card-header">
+                <strong>Reservation cle</strong>
+                <div class="card-actions">
+
+                  <button aria-controls="collapseExample" aria-expanded="false" class="btn-minimize" data-target="" data-toggle="collapse" type="button" (click)=" openrescle();">
+                    <i class="icon-arrow-up" *ngIf="isopenCle"></i>
+                    <i class="icon-arrow-down" *ngIf="!isopenCle"></i>
+                  </button>
+
+                </div>
+              </div>
+              <div class="card-block"  *ngIf="isopenCle">
+                <div class="center">
+                  <h3 class="blue lighter">Choisir des cles</h3>
+
+                  <div class="row" *ngIf="isListeCles">
+                    <div class="col-md-12">
+
+                      <div class='table-responsive'>
+                        <table id="example3" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                          <thead>
+                          <tr>
+
+
+                            <th>{{ 'ADMIN.Nom' | translate }}</th>
+                            <th>{{ 'ADMIN.Code' | translate }}</th>
+                            <th>{{ 'ADMIN.Action' | translate }}</th>
+                          </tr>
+                          </thead>
+
+                          <tbody>
+                          <tr  *ngFor='let cle of cles; let i = index' >
+
+
+
+                            <td>{{ cle.name}}</td>
+                            <td>{{ cle.code}}</td>
+                            <td>
+
+                              <input #{{cle._id}} formControlName="chekec"  [(ngModel)]="cle.selected" #cvm [checked]=false type="checkbox" (change)="checkboxcle(cle,cvm.checked,i)">
+
+
+                            </td>
+                          </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+
+
+
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-12" style="text-align: right;" >
+          <button class="btn btn-success" type="submit" [disabled]="!addEntreForm.valid"><i class="fa fa-floppy-o"></i>
+            {{ 'ADMIN.Enregistrer' | translate }}
+          </button>
+        </div>
+
+        </form>
+
+      </div>
+
+
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModalEntreAgentSiteAbson.close();">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+<modal #myModalSortiAgentSitePreson modalClass="modal-lg" >
+  <modal-header>
+    <h1>Sortie</h1>
+  </modal-header>
+  <modal-content>
+
+    <div class="center">
+      <div class="col-md-12" *ngIf="isListeAccesEntre">
+
+        <div class='table-responsive'>
+          <table id="example2" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+
+              <th class="text-center"><i class="icon-people"></i></th>
+              <th>{{ 'ADMIN.Nom' | translate }}</th>
+              <th>{{ 'ADMIN.Prenom' | translate }}</th>
+              <th><i>@</i>{{ 'ADMIN.Email' | translate }}</th>
+              <th>{{ 'ADMIN.Telephone' | translate }}</th>
+
+              <th>{{ 'ADMIN.Type' | translate }}</th>
+              <th>{{ 'ADMIN.Poste' | translate }}</th>
+              <th>{{ 'ADMIN.Action' | translate }}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr  *ngFor='let use of listAgentsSitePreson'  >
+              <td class="text-center">
+                <div class="avatar">
+                  <img  class="img-avatar"  src="/assets/public/avatar/{{use.Agent.photo}}" *ngIf="use.Agent.photo">
+                  <img  class="img-avatar"  src="/assets/public/avatar/avatar.png" *ngIf="!use.Agent.photo">
+                  <span class="avatar-status badge-success"></span>
+                </div>
+              </td>
+
+              <td>{{ use.Agent.nom}}</td>
+              <td>{{ use.Agent.prenom}}</td>
+              <td>{{ use.Agent.mail}}</td>
+              <td>{{ use.Agent.tel}}</td>
+
+              <td>{{ use.type}}</td>
+              <td>
+
+                <div *ngIf="use.poste">
+                  {{ use.poste.name}}
+                </div>
+
+              </td>
+
+              <td>
+
+                <button type="button" class="btn btn-success btn-sm" (click)="accesSorty(use);">{{ 'ADMIN.Sortie' | translate }} <i class="icon-arrow-up-circle icons"></i></button>
+
+
+
+
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+
+      </div>
+
+      <div class="row" *ngIf="isListeMaterelleEntre || validationVisiteurSorti">
+        <div class="col-md-12">
+
+          <div class="form-group row">
+
+            <div class="col-md-6">
+
+              <div class="profile-user-info profile-user-info-striped">
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Type' | translate }} </div>
+                  <div class="profile-info-value">
+                    <span class="editable editable-click" id="name">{{accesEntreActuelle.type}}</span>
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Nom' | translate }}</div>
+                  <div class="profile-info-value">
+
+                    <span class="editable editable-click" id="nomPrenon">{{accesEntreActuelle.agent.nom}} {{accesEntreActuelle.agent.prenom}}</span>
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Badge' | translate }} </div>
+                  <div class="profile-info-value">
+                    <span class="editable editable-click" id="numBadge">{{accesEntreActuelle.numBadge}}</span>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="col-md-6">
+
+              <div class="profile-user-info profile-user-info-striped">
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Societe' | translate }}</div>
+                  <div class="profile-info-value">
+
+                    <span class="editable editable-click" id="societe">{{accesEntreActuelle.societe}}</span>
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Emplacement' | translate }}</div>
+                  <div class="profile-info-value">
+
+                    <span class="editable editable-click" id="emplacement"  *ngIf="accesEntreActuelle.emplacement!=null">{{accesEntreActuelle.emplacement.name}}</span>
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.dateEntre' | translate }}</div>
+                  <div class="profile-info-value">
+                    <span class="editable editable-click" id="dateEntre">{{accesEntreActuelle.date}}</span>
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+            </div>
+
+          </div>
+
+          <button class="btn btn-primary" style="text-align: center" type="submit"  *ngIf="validationVisiteurSorti" (click)="actionSortiAgent(accesEntreActuelle);"><i class="fa fa-floppy-o"></i>
+            Validation
+          </button>
+
+
+
+          <div class='table-responsive'  *ngIf="isListeMaterelleEntre">
+            <table  class="table table-striped table-bordered" cellspacing="0" width="100%">
+              <thead>
+              <tr>
+                <th>{{ 'ADMIN.Type' | translate }}</th>
+                <th>{{ 'ADMIN.Code' | translate }}</th>
+                <th>{{ 'ADMIN.Nom' | translate }}</th>
+                <th>{{ 'ADMIN.Action' | translate }}</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr  *ngFor='let acce of listesMaterellesEntre' >
+
+                <td>{{ acce.type}}</td>
+                <td>
+                  <div class="">
+                    <a target="_blank" href="/assets/public/codeBar/{{ acce.objetType.photoCodeBar}}" *ngIf=" acce.objetType.photoCodeBar64">
+                      <img src="/assets/public/codeBar/{{acce.objetType.photoCodeBar}}" class="" alt="{{ acce.objetType.codeBar}}" >
+                    </a>
+                    <span style="visibility: hidden;font-size: 0px;">{{ acce.objetType.codeBar}}</span>
+
+                    <span class="avatar-status badge-success"></span>
+                  </div>
+                </td>
+                <td>{{ acce.objetType.name}} </td>
+
+                <td>
+                  <button type="button" class="btn btn-success btn-sm" (click)="accesMaterilleSorty(acce);">Sortie <i class="icon-arrow-up-circle icons"></i></button>
+                </td>
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+
+
+
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModalSortiAgentSitePreson.close();">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+<modal #{{myModalBadgeAgent}} #myModalBadgeAgent modalClass="modal-lg"   >
+  <modal-header>
+    <h1>Badge Agent</h1>
+  </modal-header>
+  <modal-content>
+
+    <div>
+
+      <div #{{printpage}} id="printpage">
+        <div style="width: 520px;height: 247px;border: 2px solid #cfd8dc;border-radius: 9px;" *ngIf="infoBatcheAgent">
+          <div style="margin: 5px;">
+            <div  style="width: 100%;height: 76px;">
+              <div style="float: left; width: 67%;">
+                <div style="    text-align: center;font-size: 37px;font-weight: bold;font-family: fantasy;">
+
+                  SECRT AGENT
+
+                </div>
+
+              </div>
+              <div style="float: right;">
+                <img src="/assets/img/logo-factgroup.png" style="width: 61%;float: right;">
+              </div>
+            </div>
+
+            <div  style="width: 100%;">
+              <div style="float: left; width: 70%">
+                <div style="float: left">
+
+                  <img  src="/assets/public/avatar/{{infoBatcheAgent.photo}}" *ngIf="infoBatcheAgent.photo" style="width: 137px;height: 143px;border-radius: 9px;">
+                  <img  src="/assets/public/avatar/avatar.png" *ngIf="!infoBatcheAgent.photo" style="width: 137px;height: 143px;border-radius: 9px;">
+                </div>
+
+                <div style="">
+                  <span style="font-weight: bold"> Nom: {{ infoBatcheAgent.nom}}</span><br>
+                  <span style="font-weight: bold"> Prenom:{{ infoBatcheAgent.prenom}}</span><br>
+                  <span style="font-weight: bold"> Type:</span><br>
+
+                </div>
+              </div>
+              <div style="float: right;width: 29%">
+                <div>
+                  <img src="/assets/public/codeBar/{{infoBatcheAgent.photoCodeBar}}" style="float: right;" >
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-success btn-sm"
+              (click)="myModalBadgeAgent.close();printBadge('printpage');">
+                   {{ 'ADMIN.' | translate }} <i class="icon-printer icons"></i>
+      </button>
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModalBadgeAgent.close();">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+

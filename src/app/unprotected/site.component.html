@@ -1,0 +1,259 @@
+
+
+
+<div  class="main-content" >
+  <div class="page-content">
+
+
+
+    <div class="container-fluid">
+
+
+
+
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-lg-12" style="margin-top: 29px;">
+              <div class="card">
+                <div class="card-header">
+                  <i class="fa fa-edit"></i>
+                  Inscription
+                </div>
+                <div class="card-block">
+
+                  <div *ngIf="alertsSuccess">
+                    <div  class="alert alert-success" role="alert" >
+                      <strong> {{ alertsSuccessMsg }}</strong>
+                    </div>
+                    <div class="col-xl-12" style="text-align: right;">
+
+                      <button class="btn btn-prev" style="" (click)="actionAnnule();">
+                        <i class="ace-icon fa fa-arrow-left"></i>
+                        {{ 'ADMIN.Prev' | translate }}
+                      </button>
+                    </div>
+
+                  </div>
+
+                  <div *ngIf="alertsDanger" class="alert alert-danger" role="alert">
+                    <strong> {{ alertsDangerMsg }}!</strong>
+                  </div>
+
+                  <form  [formGroup]="addBanqueForm" (ngSubmit)="addBanque()" *ngIf="!alertsSuccess">
+
+
+                    <div class="form-group row">
+                      <div class="col-md-6" >
+                        <div class="profile-user-info profile-user-info-striped">
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name">Identity</div>
+
+                            <div class="profile-info-value">
+                              <input class="form-control" type="text"  formControlName="identity"  required >
+
+                             </div>
+                          </div>
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name"> Certificate of incorporation </div>
+
+                            <div class="profile-info-value">
+                              <input class="form-control" type="text"  formControlName="certificate"  required >
+
+                             </div>
+                          </div>
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name">Licence </div>
+
+                            <div class="profile-info-value">
+                              <input class="form-control" type="text"  formControlName="Licence" required  >
+                             </div>
+                          </div>
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name"> Adresse </div>
+
+                            <div class="profile-info-value">
+
+
+                              <input class="form-control" type="text"  formControlName="Adresse"  required >
+                            </div>
+                          </div>
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name"> Téléphone </div>
+
+                            <div class="profile-info-value">
+                              <input class="form-control" type="text"  formControlName="tel"  required >
+                            </div>
+                          </div>
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name"> Email </div>
+
+                            <div class="profile-info-value">
+
+                              <input class="form-control" type="email"  formControlName="email"  required >
+
+                            </div>
+                          </div>
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name"> Fax </div>
+
+
+                            <div class="profile-info-value">
+
+                              <input class="form-control" type="text"  formControlName="fax" required >
+
+                            </div>
+
+
+                          </div>
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name"> Date de constitution </div>
+
+
+
+                            <div class="profile-info-value">
+
+                              <input class="form-control" type="date"  formControlName="dateConstitution" placeholder="dateConstitution" id="example-date-input" >
+
+                            </div>
+
+
+                          </div>
+
+
+                        </div>
+
+                        <!-- /section:pages/profile.info -->
+
+
+                      </div>
+
+                      <div class="col-md-6">
+
+
+                        <div class="profile-user-info profile-user-info-striped">
+
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name"> Certificate of incorporation </div>
+
+                            <div class="profile-info-value">
+
+
+                                <input type="file"
+                                       ngFileSelect
+                                       [options]="options"
+                                       (onUpload)="handleUploadfileCertificate($event)"
+                                       (beforeUpload)="beforeUpload($event)" />
+
+                            </div>
+                          </div>
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name"> Articles of association </div>
+
+                            <div class="profile-info-value">
+                              <input type="file"
+                                     ngFileSelect
+                                     [options]="options"
+                                     (onUpload)="fileArticlesUpload($event)"
+                                     (beforeUpload)="beforeUpload($event)" />
+
+
+
+                            </div>
+                          </div>
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name"> Latest published financials </div>
+
+
+                            <div class="profile-info-value">
+                              <input type="file"
+                                     ngFileSelect
+                                     [options]="options"
+                                     (onUpload)="handleUploadfileFinancials($event)"
+                                     (beforeUpload)="beforeUpload($event)" />
+
+                            </div>
+
+
+                          </div>
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name">Shareholders list </div>
+
+
+                            <div class="profile-info-value">
+
+                              <input type="file"
+                                     ngFileSelect
+                                     [options]="options"
+                                     (onUpload)="handleUploadfileHareholders($event)"
+                                     (beforeUpload)="beforeUpload($event)" />
+
+                            </div>
+
+
+                          </div>
+
+                          <div class="profile-info-row">
+                            <div class="profile-info-name">Licence</div>
+
+                            <div class="profile-info-value">
+
+                              <input type="file"
+                                     ngFileSelect
+                                     [options]="options"
+                                     (onUpload)="handleUploadLicence($event)"
+                                     (beforeUpload)="beforeUpload($event)" />
+
+                            </div>
+                          </div>
+
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div class="col-xl-12" style="text-align: right;">
+                      <button class="btn btn-prev" routerLink="/">
+                        <i class="ace-icon fa fa-arrow-left"></i>
+                        {{ 'ADMIN.Prev' | translate }}
+
+                      </button>
+                      <button class="btn  btn-success" type="submit" [disabled]="!addBanqueForm.valid"><i class="fa fa-floppy-o"></i>
+                        {{ 'ADMIN.Enregistrer' | translate }}
+                      </button>
+                    </div>
+
+
+                  </form>
+
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+
+
+  </div>
+</div>

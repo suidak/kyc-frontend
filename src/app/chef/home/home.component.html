@@ -1,0 +1,595 @@
+<div class="card card-default">
+  <div class="card-header" style="color: #ffffff;background-color: #c40a26;">
+    <i class="icon-pie-chart"></i>
+    {{ 'ADMIN.Dashboard' | translate }}
+
+    <div style=" float: right;">
+      {{ 'ADMIN.AUJOURDHUI' | translate }}: <span id="ejs_heure" style="font-weight: bolder;"  ></span>
+    </div>
+  </div>
+
+</div>
+<div class="container-fluid">
+
+
+  <infoIncidents-cmp></infoIncidents-cmp>
+
+  <div class="row">
+
+    <div class="col-lg-6">
+      <div class="card card-default">
+        <div class="card-header" style="border: 1px solid #1b249f;padding: 0;">
+          <i class="ace-icon fa fa-info-circle" style="background: #1b249f;color: white;padding: 0.75rem 1.25rem; font-size: 20px"></i>
+          {{ 'ADMIN.Consignes' | translate }}
+          <div style="float: right; transform: translateX(-10px)translateY(5px);" *ngIf="userActuelle.typeAgent!='Agent'" >
+            <button type="button" class="btn btn-success btn-sm" (click)="myModaladdConsignes.open();">{{ 'ADMIN.Add' | translate }}
+              <i class="icon-plus icons"></i></button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row" style="padding: 1.25rem;">
+
+            <div class="col-sm-12">
+
+              <ng-template #modalContent let-close="close">
+                <div class="modal-header">
+                  <h5 class="modal-title">Event action occurred</h5>
+                  <button type="button" class="close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div>
+                    Action:
+                    <pre>{{ modalData?.action }}</pre>
+                  </div>
+                  <div>
+                    Event:
+                    <pre>{{ modalData?.event | json }}</pre>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" (click)="close()">OK</button>
+                </div>
+              </ng-template>
+
+              <div class="row text-center">
+                <div class="col-sm">
+                  <div class="btn-group">
+                    <div
+                      class="btn btn-info"
+                      mwlCalendarPreviousView
+                      [view]="view"
+                      [(viewDate)]="viewDate">
+                      < {{ 'ADMIN.Previous' | translate }}
+                    </div>
+                    <div
+                      class="btn btn-secondary"
+                      mwlCalendarToday
+                      [(viewDate)]="viewDate">
+                      {{ 'ADMIN.Today' | translate }}
+                    </div>
+                    <div
+                      class="btn btn-info"
+                      mwlCalendarNextView
+                      [view]="view"
+                      [(viewDate)]="viewDate">
+                      {{ 'ADMIN.Next' | translate }} >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm"  >
+                  <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+                </div>
+                <div class="col-sm">
+                  <div class="btn-group">
+                    <div
+                      class="btn btn-info"
+                      (click)="view = 'month'"
+                      [class.active]="view === 'month'">
+                      {{ 'ADMIN.Month' | translate }}
+                    </div>
+                    <div
+                      class="btn btn-info"
+                      (click)="view = 'week'"
+                      [class.active]="view === 'week'">
+                      {{ 'ADMIN.Week' | translate }}
+                    </div>
+                    <div
+                      class="btn btn-info"
+                      (click)="view = 'day'"
+                      [class.active]="view === 'day'">
+                      {{ 'ADMIN.Day' | translate }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div [ngSwitch]="view">
+                <mwl-calendar-month-view
+                  *ngSwitchCase="'month'"
+                  [viewDate]="viewDate"
+                  [events]="events"
+                  [locale]="locale"
+                  [weekStartsOn]="weekStartsOn"
+                  [weekendDays]="weekendDays"
+                  [refresh]="refresh"
+                  [activeDayIsOpen]="activeDayIsOpen"
+                  (dayClicked)="dayClicked($event.day)"
+
+                  (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-month-view>
+                <mwl-calendar-week-view
+                  *ngSwitchCase="'week'"
+                  [viewDate]="viewDate"
+                  [events]="events"
+                  [locale]="locale"
+                  [weekStartsOn]="weekStartsOn"
+                  [weekendDays]="weekendDays"
+                  [refresh]="refresh"
+                  (eventClicked)="handleEvent('Clicked', $event.event)"
+                  (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-week-view>
+                <mwl-calendar-day-view
+                  *ngSwitchCase="'day'"
+                  [viewDate]="viewDate"
+                  [events]="events"
+                  [refresh]="refresh"
+                  (eventClicked)="handleEvent('Clicked', $event.event)"
+                  (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-day-view>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+      <div class="col-lg-6">
+        <div class="card card-default">
+          <div class="card-header" style="border: 1px solid #009640;padding: 0;">
+            <i class="ace-icon fa fa-calendar" style="background: #009640;color: white;padding: 0.75rem 1.25rem; font-size: 20px"></i>
+            Evenements
+
+            <div style="float: right; transform: translateX(-10px)translateY(5px);">
+              <button type="button" class="btn btn-success btn-sm" (click)="actionAddEvent();myModaladdevent.open();">{{ 'ADMIN.Add' | translate }}
+                <i class="icon-plus icons"></i></button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="list-group scrollbar" style="height: 663px;overflow: scroll;overflow-x: hidden;overflow-y: auto;">
+              <div class="row list-group-item"  *ngFor='let evenement of listeEvenementJour' style="    padding: 24px;">
+                <div class="col-sm-1">
+                  <div class="avatar">
+                    <img  class="img-avatar" alt="{{ evenement.user.nom}} {{ evenement.user.prenom}}" src="/assets/public/avatar/{{evenement.user.photo}}" *ngIf="evenement.user.photo">
+                    <img  class="img-avatar" alt="{{ evenement.user.nom}} {{ evenement.user.prenom}}" src="/assets/public/avatar/avatar.png" *ngIf="!evenement.user.photo">
+
+                  </div>
+                </div>
+                <div class="col-sm-9" >
+                  <span class="pull-right text-muted small"><em>{{evenement.dateCreation | amTimeAgo}}</em></span>
+
+                  <p style="word-wrap: break-word;"><em>{{ evenement.remarque}}</em></p>
+
+                </div>
+                <div class="col-sm-2" >
+                  <span style="color: #0a85c1;font-weight: bold;">{{ evenement.date | date:'dd-MM-yyyy'}}</span>
+
+
+                </div>
+              </div>
+
+            </div>
+            <!-- /.list-group -->
+            <a  routerLink="/chef/evenements" class="btn btn-default btn-block">{{ 'ADMIN.View More' | translate }}</a>
+          </div>
+        </div>
+      </div>
+
+
+
+  </div>
+
+
+
+  <div class="row">
+
+
+    <controlacces-cmp class="col-lg-12"></controlacces-cmp>
+
+    <div class="col-lg-6">
+    <div class="card card-default">
+      <div class="card-header" style="border: 1px solid #005578;padding: 0;">
+        <i class="ace-icon fa fa-refresh" style="background: #005578;color: white;padding: 0.75rem 1.25rem; font-size: 20px"></i>
+        RONDES
+        <div style="float: right; transform: translateX(-10px)translateY(5px);">
+          <button type="button" class="btn btn-success btn-sm" (click)="myModaladdRondes.open();">{{ 'ADMIN.Add' | translate }}
+            <i class="icon-plus icons"></i></button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="list-group scrollbar" style="height: 420px;overflow: scroll;overflow-x: hidden;overflow-y: auto;">
+          <div class="row list-group-item"  *ngFor='let rond of listeRondeJour' style="    padding: 24px;">
+            <div class="col-sm-1">
+              <div class="avatar">
+                <img  class="img-avatar" alt="{{ rond.agent.Agent.nom}} {{ rond.agent.Agent.prenom}}" src="/assets/public/avatar/{{rond.agent.Agent.photo}}" *ngIf="rond.agent.Agent.photo">
+                <img  class="img-avatar" alt="{{ rond.agent.Agent.nom}} {{ rond.agent.Agent.prenom}}" src="/assets/public/avatar/avatar.png" *ngIf="!rond.agent.Agent.photo">
+
+              </div>
+            </div>
+            <div class="col-sm-9" >
+              <span class="pull-right text-muted small"><em>{{rond.dateCreation | amTimeAgo}}</em></span>
+              <span style="font-weight: bold;">{{ rond.debut}} / {{ rond.fin}}</span>
+              <p style="word-wrap: break-word;font-weight: bold;"><em>{{ rond.element}}</em></p>
+
+            </div>
+            <div class="col-sm-2" >
+              <span style="    color: #0a85c1;font-weight: bold;">{{rond.type }}</span>
+
+
+            </div>
+          </div>
+
+        </div>
+        <!-- /.list-group -->
+        <a  routerLink="/chef/ronde" class="btn btn-default btn-block">{{ 'ADMIN.View More' | translate }}</a>
+      </div>
+    </div>
+  </div>
+
+
+
+
+    <div class="col-lg-6">
+      <div class="card card-default">
+        <div class="card-header" style="border: 1px solid #4e6b11;padding: 0;">
+          <i class="ace-icon fa fa-check-square-o" style="background: #4e6b11;color: white;padding: 0.75rem 1.25rem; font-size: 20px"></i>
+          PROCEDURES/PLANNING
+          <div style="float: right; transform: translateX(-10px)translateY(5px);" *ngIf="userActuelle.typeAgent!='Agent'">
+            <button type="button" class="btn btn-success btn-sm" (click)="myModaladdProcedures.open();">{{ 'ADMIN.Add' | translate }}
+              <i class="icon-plus icons"></i></button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="list-group scrollbar" style="height: 420px;overflow: scroll;overflow-x: hidden;overflow-y: auto;">
+            <div class="row list-group-item"  *ngFor='let procedure of listeProcedureJour' style="    padding: 24px;">
+
+
+                <div class="col-sm-10" >
+                  <a (click)="openedInfoProcedure(procedure);myModal.open();">
+                  <span class="pull-right text-muted small"><em>{{procedure.dateCreation | amTimeAgo}}</em></span>
+                  <p style="word-wrap: break-word;font-weight: bold;"><em>{{ procedure.nom}}</em>   <i class="ace-icon fa fa-paperclip"  *ngIf="procedure.pieceJointe.length > 0"></i> </p>
+                  </a>
+
+                </div>
+              <div class="col-sm-2" >
+                <span style="color: #0a85c1;font-weight: bold;">{{ procedure.dateCreation | date:'dd-MM-yyyy'}}</span>
+
+
+              </div>
+
+
+
+            </div>
+
+          </div>
+          <!-- /.list-group -->
+          <a   class="btn btn-default btn-block" routerLink="/chef/procedures" >{{ 'ADMIN.View More' | translate }}</a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <modal #myModal modalClass="modal-lg" >
+    <modal-header>
+      <h1>Info </h1>
+    </modal-header>
+    <modal-content>
+
+
+
+      <div class="form-group row" *ngIf="openedInfo">
+        <div class="col-md-6" >
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name"> {{ 'ADMIN.Nom' | translate }}  </div>
+
+              <div class="profile-info-value">
+                <span>{{procedureInfo.nom}}</span>
+
+              </div>
+            </div>
+
+            <div class="profile-info-row">
+              <div class="profile-info-name"> {{ 'ADMIN.Lien' | translate }}  </div>
+
+              <div class="profile-info-value">
+
+                <span>{{procedureInfo.lien}}</span>
+
+              </div>
+            </div>
+
+            <div class="profile-info-row">
+              <div class="profile-info-name"> {{ 'ADMIN.pièce jointe' | translate }}  </div>
+
+              <div class="profile-info-value">
+
+                <div class="row">
+                  <div  *ngFor="let Jointe of procedureInfo.pieceJointe" class="col-md-2 col-sm-4">
+                    <div class="card">
+                      <div *ngIf="Jointe.slice( 19, 23 )=='jpg'||Jointe.slice( 19, 23 )=='png'||Jointe.slice( 19, 24 )=='jpeg'||Jointe.slice( 19, 23 )=='gif'" >
+                        <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                          <img  src="/assets/public/procedure/icone/image.png" style="width: 100%;" />
+                        </a>
+                      </div>
+                      <div *ngIf="Jointe.slice( 19, 23 )=='pdf'">
+                        <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                          <img  src="/assets/public/procedure/icone/pdf.png" style="width: 100%;"/>
+                        </a>
+                      </div>
+                      <div *ngIf="Jointe.slice( 19, 23 )=='doc'||Jointe.slice( 19, 24 )=='docx'">
+                        <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                          <img  src="/assets/public/procedure/icone/word.png" style="width: 100%;" />
+                        </a>
+                      </div>
+                      <div *ngIf="Jointe.slice( 19, 23 )=='zip'||Jointe.slice( 19, 23 )=='rar'||Jointe.slice( 19, 24 )=='7zip'||Jointe.slice( 19, 22 )=='tg'">
+                        <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                          <img  src="/assets/public/procedure/icone/zip.jpg" style="width: 100%;" />
+                        </a>
+                      </div>
+
+
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+
+
+
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="col-md-6" >
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name"> {{ 'ADMIN.Remarque' | translate }}  </div>
+
+              <div class="profile-info-value">
+
+                <p>{{procedureInfo.remarque}}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+    </modal-content>
+    <modal-footer>
+      <button class="btn btn-primary" (click)="myModal.close()">{{ 'ADMIN.Close' | translate }}</button>
+    </modal-footer>
+  </modal>
+
+
+  <modal #myModaladdevent modalClass="modal-lg" >
+    <modal-header>
+      <h1>Ajouter Evenement </h1>
+    </modal-header>
+    <modal-content>
+
+
+      <div class="row" >
+        <div class="col-md-12">
+
+
+          <div *ngIf="alertsSuccess">
+            <div  class="alert alert-success" role="alert" >
+              <strong> {{ alertsSuccessMsg }}</strong>
+            </div>
+
+            <div class="modal-footer wizard-actions">
+              <button class="btn btn-prev" (click)="prevEtapEvenement()">
+                <i class="ace-icon fa fa-arrow-left"></i>
+                {{ 'ADMIN.Prev' | translate }}
+
+              </button>
+            </div>
+
+          </div>
+
+
+          <div *ngIf="alertsDanger" class="alert alert-danger" role="alert">
+            <strong> {{ alertsDangerMsg }}!</strong>
+          </div>
+
+
+          <form  [formGroup]="addEvenementForm" (ngSubmit)="addEvenement()"  *ngIf="!alertsSuccess">
+            <div class="form-group row">
+              <div class="col-md-6" >
+                <div class="profile-user-info profile-user-info-striped">
+
+
+                  <div class="profile-info-row">
+                    <div class="profile-info-name"> {{ 'ADMIN.Description' | translate }} </div>
+
+                    <div class="profile-info-value">
+
+                      <textarea class="form-control" type="text"  formControlName="remarque" value="" style="min-height: 112px;"></textarea>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+              <div class="col-md-6 row" >
+                <div class="col-md-6" >
+                  <div class="profile-user-info profile-user-info-striped">
+
+                    <div class="profile-info-row">
+                      <div class="profile-info-name"> {{ 'ADMIN.Date' | translate }} </div>
+
+                      <div class="profile-info-value"  >
+
+                        <input class="form-control" type="date" [ngModel]="datexxxxx | date:'yyyy-MM-dd'"
+
+                               max="{{datexxxxx | date:'yyyy-MM-dd'}}" formControlName="date" placeholder="date"
+
+                               id="example-date-input" required>
+                      </div>
+                    </div>
+
+
+                  </div>
+
+                </div>
+                <div class="col-md-6" >
+
+                  <div class="profile-user-info profile-user-info-striped">
+
+                    <div class="profile-info-row">
+                      <div class="profile-info-name"> {{ 'ADMIN.Heure' | translate }} </div>
+
+                      <div class="profile-info-value" >
+
+                        <input class="form-control" type="time"
+                               [ngModel]="datexxxxx | date:'HH:mm'"
+                               max="{{datexxxxx | date:'HH:mm'}}"
+
+                               formControlName="heure"   >
+                      </div>
+                    </div>
+
+
+                  </div>
+
+                </div>
+                <div class="col-md-12" >
+
+                  <div class="profile-user-info profile-user-info-striped">
+
+                    <div class="profile-info-row">
+                      <div class="profile-info-name"> Notification contact </div>
+
+                      <div class="profile-info-value">
+
+
+
+
+                        <div style="margin: 5px;" *ngFor="let contact of contacts ; let i = index">
+                          <label style="width: 100%;" >
+                            <input #{{contact}}   #cnm [checked]=false type="checkbox" (change)="checkboxEventNotifActions(contact,cnm.checked,i)">
+                            {{contact.nom}} {{contact.prenom}}: {{contact.mail}}
+                          </label>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-md-12" style="text-align: right;" >
+              <button class="btn btn-success" type="submit" [disabled]="!addEvenementForm.valid"><i class="fa fa-floppy-o"></i>
+                {{ 'ADMIN.Enregistrer' | translate }}
+              </button>
+            </div>
+          </form>
+
+
+
+
+
+        </div>
+
+      </div>
+
+
+
+    </modal-content>
+    <modal-footer>
+      <button class="btn btn-primary" (click)="myModaladdevent.close()">{{ 'ADMIN.Close' | translate }}</button>
+    </modal-footer>
+  </modal>
+
+
+  <modal #myModaladdRondes modalClass="modal-lg" >
+    <modal-header>
+      <h1> Ajouter Rondes </h1>
+    </modal-header>
+    <modal-content>
+
+      <ronde-cmp></ronde-cmp>
+
+    </modal-content>
+    <modal-footer>
+      <button class="btn btn-primary" (click)="myModaladdRondes.close()">{{ 'ADMIN.Close' | translate }}</button>
+    </modal-footer>
+  </modal>
+
+  <modal #myModaladdProcedures modalClass="modal-lg" >
+    <modal-header>
+      <h1> Ajouter procedures </h1>
+    </modal-header>
+    <modal-content>
+
+
+
+      <procedure-cmp></procedure-cmp>
+
+
+    </modal-content>
+    <modal-footer>
+      <button class="btn btn-primary" (click)="myModaladdProcedures.close()">{{ 'ADMIN.Close' | translate }}</button>
+    </modal-footer>
+  </modal>
+
+
+  <modal #myModaladdConsignes modalClass="modal-lg" >
+    <modal-header>
+      <h1> Ajouter Consignes </h1>
+    </modal-header>
+    <modal-content>
+
+
+
+      <consigne-cmp></consigne-cmp>
+
+
+    </modal-content>
+    <modal-footer>
+      <button class="btn btn-primary" (click)="myModaladdConsignes.close()">{{ 'ADMIN.Close' | translate }}</button>
+    </modal-footer>
+  </modal>
+
+
+
+
+
+
+
+
+</div>
+
+

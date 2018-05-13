@@ -1,0 +1,211 @@
+
+  <div class="row" >
+
+
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-edit"></i>  {{ 'ADMIN.AJOUTERRondes' | translate }}
+            </div>
+            <div class="card-block">
+
+
+              <form  [formGroup]="addRondeForm" (ngSubmit)="addRonde()" >
+
+                <div class="form-group row">
+                  <div class="col-md-4" >
+                    <div class="profile-user-info profile-user-info-striped">
+
+                      <div class="profile-info-row">
+                        <div class="profile-info-name">{{ 'ADMIN.Date' | translate }} </div>
+
+                        <div class="profile-info-value">
+                          <input class="form-control" type="date" placeholder="date" [ngModel]="datexxxxx | date:'yyyy-MM-dd'" formControlName="date" placeholder="date" id="example-date-input" >
+
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div class="col-md-4" >
+                    <!-- #section:pages/profile.info -->
+
+
+                    <div class="profile-user-info profile-user-info-striped">
+
+                      <div class="profile-info-row">
+                        <div class="profile-info-name">{{ 'ADMIN.Type' | translate }} </div>
+
+                        <div class="profile-info-value">
+
+                          <select class="form-control "  formControlName="type" (ngModelChange)="appelMethodeType($event);">
+                            <option *ngFor="let x of listeTypeRonde"  [ngValue]="x">{{x}}</option>
+                          </select>
+
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div class="col-md-4" >
+                    <!-- #section:pages/profile.info -->
+
+
+                    <div class="profile-user-info profile-user-info-striped">
+
+                      <div class="profile-info-row">
+                        <div class="profile-info-name">{{ 'ADMIN.Agent' | translate }} </div>
+
+                        <div class="profile-info-value">
+                          <select class="form-control "  formControlName="agent">
+                            <option *ngFor="let z of listAgentsSite"  [ngValue]="z">{{z.Agent.nom}}</option>
+                          </select>
+
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+                <div class="row" >
+                  <div class="col-md-12">
+
+                    <div class='table-responsive'>
+                      <table  class="table">
+                        <thead>
+                        <tr>
+
+                          <th class="text-center"><i class="ace-icon fa fa-clock-o bigger-110"></i>Début</th>
+                          <th class="text-center"><i class="ace-icon fa fa-clock-o bigger-110"></i>Fin</th>
+                          <th class="text-center">Emplacement</th>
+
+
+                          <th class="text-center">Remarque</th>
+                          <th class="text-center"></th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+
+                        <tr *ngFor='let rd of rondes' >
+                          <td>{{ rd.debut}}</td>
+                          <td>{{ rd.fin}}</td>
+                          <td>{{ rd.emplacement.name}}</td>
+
+                          <td>{{ rd.remarque}}</td>
+                          <td>
+                            <button class="btn btn-primary" (click)="delateRonde(rd);"  >
+                              <i class="fa fa-minus-square"></i>
+                            </button>
+
+                          </td>
+                        </tr>
+
+
+                        <tr>
+
+
+
+                          <td>
+
+                            <input  class="form-control" type="time"  [ngModel]="datexxxxx | date:'HH:mm'"  formControlName="debut"  pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" >
+
+
+                          </td>
+                          <td>
+
+                            <input  class="form-control" type="time" [ngModel]="datexxxxx | date:'HH:mm'"    formControlName="fin"  pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" >
+
+                          </td>
+                          <td>
+                            <select class="form-control "  formControlName="emplacement" value="{{addRondeForm.value.emplacement}}" (ngModelChange)="appelMethodeZone($event);">
+                              <option *ngFor="let zone of zones"  [ngValue]="zone">{{zone.name}}</option>
+                            </select>
+
+                          </td>
+
+
+
+                          <td><input class="form-control" type="text"  formControlName="remarque" value="" ></td>
+                          <td>
+
+                          </td>
+                        </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+
+
+                  </div>
+
+                  <div class="col-md-12" *ngIf="listeActions.length>0">
+                    <div class="profile-user-info profile-user-info-striped">
+
+                      <div class="profile-info-row" >
+                        <div class="profile-info-name">{{ 'ADMIN.Action' | translate }}</div>
+
+                        <div style="margin: 5px;" *ngFor="let action of listeActions ; let i = index">
+                          <label style="width: 100%;" >
+                            <input #{{action}}   #cvm [checked]=false type="checkbox" (change)="checkboxActions(action,cvm.checked,i)">
+
+                            {{action}}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12" *ngIf="listeElement.length>0">
+                    <div class="profile-user-info profile-user-info-striped">
+
+                      <div class="profile-info-row" *ngFor="let element of listeElement ; let i = index">
+                        <div class="profile-info-name">{{element}}</div>
+                        <input  class="form-control" type="text" #{{element}} #cvme (input)="onSearchChange($event.target.value,element,i)" >
+
+                      </div>
+                    </div>
+
+                  </div>
+
+
+
+                  <div class="col-md-12" style="text-align: right;" >
+
+
+                    <button class="btn btn-success" type="submit" [disabled]="!addRondeForm.valid"><i class="fa fa-floppy-o"></i>
+                      {{ 'ADMIN.Add' | translate }}
+                    </button>
+
+                  </div>
+
+
+                </div>
+
+              </form>
+
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+  </div>
+

@@ -1,0 +1,170 @@
+
+
+  <div class="row">
+
+
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-edit"></i>  {{ 'ADMIN.AJOUTERProcedures' | translate }}
+            </div>
+            <div class="card-block">
+              <div class="row" >
+                  <div class="col-md-12">
+
+
+                    <div class='table-responsive'>
+                      <form  [formGroup]="addProcedureTestForm" (ngSubmit)="addProcedure()" >
+
+                        <div class="form-group row">
+                          <div class="col-md-6" >
+                            <div class="profile-user-info profile-user-info-striped">
+
+                              <div class="profile-info-row">
+                                <div class="profile-info-name"> {{ 'ADMIN.Nom' | translate }}  </div>
+
+                                <div class="profile-info-value">
+                                  <input  class="form-control" type="text" formControlName="nom" >
+
+                                </div>
+                              </div>
+
+                              <div class="profile-info-row">
+                                <div class="profile-info-name"> {{ 'ADMIN.Lien' | translate }}  </div>
+
+                                <div class="profile-info-value">
+                                  <input  class="form-control" type="text" formControlName="lien" >
+
+                                </div>
+                              </div>
+
+                              <div class="profile-info-row">
+                                <div class="profile-info-name"> {{ 'ADMIN.pièce jointe' | translate }}  </div>
+
+                                <div class="profile-info-value">
+                                  <input type="file"
+                                         ngFileSelect
+                                         [options]="options"
+                                         (onUpload)="handleUpload($event)"
+                                         (beforeUpload)="beforeUpload($event)" multiple
+                                         style="width: 100%;" />
+                                </div>
+                              </div>
+
+                            </div>
+
+                          </div>
+                          <div class="col-md-6" >
+                            <div class="profile-user-info profile-user-info-striped">
+
+                              <div class="profile-info-row">
+                                <div class="profile-info-name"> {{ 'ADMIN.Remarque' | translate }}  </div>
+
+                                <div class="profile-info-value">
+                                  <textarea class="form-control" type="text"  formControlName="remarqueTest" value="" ></textarea>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="col-xl-12" style="text-align: right;">
+                          <button class="btn  btn-success" type="submit" [disabled]="!addProcedureTestForm.valid"><i class="fa fa-floppy-o"></i>
+                            {{ 'ADMIN.Enregistrer' | translate }}
+                          </button>
+                        </div>
+                      </form>
+                      <table  class="table">
+                        <thead>
+                        <tr>
+
+                          <th >Nom </th>
+                          <th>lien </th>
+                          <th>remarque </th>
+                          <th>pieceJointe </th>
+                          <th ></th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+
+                        <tr *ngFor='let rd of procedures' >
+                          <td>{{ rd.nom}}</td>
+                          <td>{{ rd.lien}}</td>
+                          <td>{{ rd.remarque}}</td>
+                          <td>
+                            <div class="row">
+                            <div  *ngFor="let Jointe of rd.pieceJointe" class="col-md-2 col-sm-4">
+                              <div class="card">
+                                <div *ngIf="Jointe.slice( 19, 23 )=='jpg'||Jointe.slice( 19, 23 )=='png'||Jointe.slice( 19, 24 )=='jpeg'||Jointe.slice( 19, 23 )=='gif'" >
+                                  <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                                    <img  src="/assets/public/messages/icone/image.png" style="width: 100%;" />
+                                  </a>
+                                </div>
+                                <div *ngIf="Jointe.slice( 19, 23 )=='pdf'">
+                                  <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                                    <img  src="/assets/public/messages/icone/pdf.png" style="width: 100%;"/>
+                                  </a>
+                                </div>
+                                <div *ngIf="Jointe.slice( 19, 23 )=='doc'||Jointe.slice( 19, 24 )=='docx'">
+                                  <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                                    <img  src="/assets/public/messages/icone/word.png" style="width: 100%;" />
+                                  </a>
+                                </div>
+                                <div *ngIf="Jointe.slice( 19, 23 )=='zip'||Jointe.slice( 19, 23 )=='rar'||Jointe.slice( 19, 24 )=='7zip'||Jointe.slice( 19, 22 )=='tg'">
+                                  <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                                    <img  src="/assets/public/messages/icone/zip.jpg" style="width: 100%;" />
+                                  </a>
+                                </div>
+
+
+                              </div>
+
+                            </div>
+                            </div>
+
+                          </td>
+
+                          <td>
+                            <button class="btn btn-primary" (click)="delateProcedure(rd);"  >
+                              <i class="fa fa-minus-square"></i>
+                            </button>
+
+                          </td>
+                        </tr>
+
+
+
+
+                        </tbody>
+                      </table>
+
+                    </div>
+
+
+                  </div>
+
+                </div>
+
+
+
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+  </div>
+

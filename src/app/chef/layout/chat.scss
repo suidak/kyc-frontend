@@ -1,0 +1,469 @@
+/*
+  Google Hangouts-like bootstrap css originally from:
+  http://bootsnipp.com/snippets/featured/like-hangout-chat
+  by SrPatinhas
+
+  as well as some css from "Chat": http://bootsnipp.com/snippets/featured/chat
+  by hardiksondagar
+ */
+a, button {
+  cursor: pointer;
+}
+
+.scrollbar{
+  width: 100%;
+  background: #f1f1f1;
+  height: 311px;
+  max-height: 311px;
+  //overflow: scroll;
+  overflow-x: hidden;
+  margin: 0 auto;
+  padding: 3px;
+ /* padding: 3em;*/
+  font: 100%/1.4 serif;
+  border: 1px solid rgba(0,0,0,0.25);
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 1em;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type="date"].form-control, .chat-window .panel-footer input[type="date"].chat-input,
+  input[type="time"].form-control,
+  .chat-window .panel-footer input[type="time"].chat-input,
+  input[type="datetime-local"].form-control,
+  .chat-window .panel-footer input[type="datetime-local"].chat-input,
+  input[type="month"].form-control,
+  .chat-window .panel-footer input[type="month"].chat-input {
+    line-height: 34px; }
+  input[type="date"].input-sm, .input-group-sm > input[type="date"].form-control,
+  .input-group-sm > input[type="date"].input-group-addon,
+  .input-group-sm > .input-group-btn > input[type="date"].btn, .chat-window .panel-footer
+  .input-group-sm > .input-group-btn > input[type="date"].btn-chat, .chat-window .panel-footer input[type="date"].chat-input,
+  .input-group-sm input[type="date"],
+  input[type="time"].input-sm,
+  .input-group-sm > input[type="time"].form-control,
+  .input-group-sm > input[type="time"].input-group-addon,
+  .input-group-sm > .input-group-btn > input[type="time"].btn,
+  .chat-window .panel-footer
+  .input-group-sm > .input-group-btn > input[type="time"].btn-chat,
+  .chat-window .panel-footer input[type="time"].chat-input,
+  .input-group-sm
+  input[type="time"],
+  input[type="datetime-local"].input-sm,
+  .input-group-sm > input[type="datetime-local"].form-control,
+  .input-group-sm > input[type="datetime-local"].input-group-addon,
+  .input-group-sm > .input-group-btn > input[type="datetime-local"].btn,
+  .chat-window .panel-footer
+  .input-group-sm > .input-group-btn > input[type="datetime-local"].btn-chat,
+  .chat-window .panel-footer input[type="datetime-local"].chat-input,
+  .input-group-sm
+  input[type="datetime-local"],
+  input[type="month"].input-sm,
+  .input-group-sm > input[type="month"].form-control,
+  .input-group-sm > input[type="month"].input-group-addon,
+  .input-group-sm > .input-group-btn > input[type="month"].btn,
+  .chat-window .panel-footer
+  .input-group-sm > .input-group-btn > input[type="month"].btn-chat,
+  .chat-window .panel-footer input[type="month"].chat-input,
+  .input-group-sm
+  input[type="month"] {
+    line-height: 30px; }
+  input[type="date"].input-lg, .input-group-lg > input[type="date"].form-control, .chat-window .panel-footer .input-group-lg > input[type="date"].chat-input,
+  .input-group-lg > input[type="date"].input-group-addon,
+  .input-group-lg > .input-group-btn > input[type="date"].btn, .chat-window .panel-footer
+  .input-group-lg > .input-group-btn > input[type="date"].btn-chat,
+  .input-group-lg input[type="date"],
+  input[type="time"].input-lg,
+  .input-group-lg > input[type="time"].form-control,
+  .chat-window .panel-footer .input-group-lg > input[type="time"].chat-input,
+  .input-group-lg > input[type="time"].input-group-addon,
+  .input-group-lg > .input-group-btn > input[type="time"].btn,
+  .chat-window .panel-footer
+  .input-group-lg > .input-group-btn > input[type="time"].btn-chat,
+  .input-group-lg
+  input[type="time"],
+  input[type="datetime-local"].input-lg,
+  .input-group-lg > input[type="datetime-local"].form-control,
+  .chat-window .panel-footer .input-group-lg > input[type="datetime-local"].chat-input,
+  .input-group-lg > input[type="datetime-local"].input-group-addon,
+  .input-group-lg > .input-group-btn > input[type="datetime-local"].btn,
+  .chat-window .panel-footer
+  .input-group-lg > .input-group-btn > input[type="datetime-local"].btn-chat,
+  .input-group-lg
+  input[type="datetime-local"],
+  input[type="month"].input-lg,
+  .input-group-lg > input[type="month"].form-control,
+  .chat-window .panel-footer .input-group-lg > input[type="month"].chat-input,
+  .input-group-lg > input[type="month"].input-group-addon,
+  .input-group-lg > .input-group-btn > input[type="month"].btn,
+  .chat-window .panel-footer
+  .input-group-lg > .input-group-btn > input[type="month"].btn-chat,
+  .input-group-lg
+  input[type="month"] {
+    line-height: 46px; } }
+
+.btn-primary, .chat-window .panel-footer .btn-chat {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4; }
+.btn-primary:focus, .chat-window .panel-footer .btn-chat:focus, .btn-primary.focus, .chat-window .panel-footer .focus.btn-chat {
+  color: #fff;
+  background-color: #286090;
+  border-color: #122b40; }
+.btn-primary:hover, .chat-window .panel-footer .btn-chat:hover {
+  color: #fff;
+  background-color: #286090;
+  border-color: #204d74; }
+.btn-primary:active, .chat-window .panel-footer .btn-chat:active, .btn-primary.active, .chat-window .panel-footer .active.btn-chat,
+.open > .btn-primary.dropdown-toggle, .chat-window .panel-footer
+.open > .dropdown-toggle.btn-chat {
+  color: #fff;
+  background-color: #286090;
+  border-color: #204d74; }
+.btn-primary:active:hover, .chat-window .panel-footer .btn-chat:active:hover, .btn-primary:active:focus, .chat-window .panel-footer .btn-chat:active:focus, .btn-primary:active.focus, .chat-window .panel-footer .btn-chat:active.focus, .btn-primary.active:hover, .chat-window .panel-footer .active.btn-chat:hover, .btn-primary.active:focus, .chat-window .panel-footer .active.btn-chat:focus, .btn-primary.active.focus, .chat-window .panel-footer .active.focus.btn-chat,
+.open > .btn-primary.dropdown-toggle:hover, .chat-window .panel-footer
+.open > .dropdown-toggle.btn-chat:hover,
+.open > .btn-primary.dropdown-toggle:focus, .chat-window .panel-footer
+.open > .dropdown-toggle.btn-chat:focus,
+.open > .btn-primary.dropdown-toggle.focus, .chat-window .panel-footer
+.open > .dropdown-toggle.focus.btn-chat {
+  color: #fff;
+  background-color: #204d74;
+  border-color: #122b40; }
+.btn-primary:active, .chat-window .panel-footer .btn-chat:active, .btn-primary.active, .chat-window .panel-footer .active.btn-chat,
+.open > .btn-primary.dropdown-toggle, .chat-window .panel-footer
+.open > .dropdown-toggle.btn-chat {
+  background-image: none; }
+.btn-primary.disabled, .chat-window .panel-footer .disabled.btn-chat, .btn-primary.disabled:hover, .chat-window .panel-footer .disabled.btn-chat:hover, .btn-primary.disabled:focus, .chat-window .panel-footer .disabled.btn-chat:focus, .btn-primary.disabled.focus, .chat-window .panel-footer .disabled.focus.btn-chat, .btn-primary.disabled:active, .chat-window .panel-footer .disabled.btn-chat:active, .btn-primary.disabled.active, .chat-window .panel-footer .disabled.active.btn-chat, .btn-primary[disabled], .chat-window .panel-footer [disabled].btn-chat, .btn-primary[disabled]:hover, .chat-window .panel-footer [disabled].btn-chat:hover, .btn-primary[disabled]:focus, .chat-window .panel-footer [disabled].btn-chat:focus, .btn-primary[disabled].focus, .chat-window .panel-footer [disabled].focus.btn-chat, .btn-primary[disabled]:active, .chat-window .panel-footer [disabled].btn-chat:active, .btn-primary[disabled].active, .chat-window .panel-footer [disabled].active.btn-chat,
+fieldset[disabled] .btn-primary,
+fieldset[disabled] .chat-window .panel-footer .btn-chat, .chat-window .panel-footer
+fieldset[disabled] .btn-chat,
+fieldset[disabled] .btn-primary:hover,
+fieldset[disabled] .chat-window .panel-footer .btn-chat:hover, .chat-window .panel-footer
+fieldset[disabled] .btn-chat:hover,
+fieldset[disabled] .btn-primary:focus,
+fieldset[disabled] .chat-window .panel-footer .btn-chat:focus, .chat-window .panel-footer
+fieldset[disabled] .btn-chat:focus,
+fieldset[disabled] .btn-primary.focus,
+fieldset[disabled] .chat-window .panel-footer .focus.btn-chat, .chat-window .panel-footer
+fieldset[disabled] .focus.btn-chat,
+fieldset[disabled] .btn-primary:active,
+fieldset[disabled] .chat-window .panel-footer .btn-chat:active, .chat-window .panel-footer
+fieldset[disabled] .btn-chat:active,
+fieldset[disabled] .btn-primary.active,
+fieldset[disabled] .chat-window .panel-footer .active.btn-chat, .chat-window .panel-footer
+fieldset[disabled] .active.btn-chat {
+  background-color: #337ab7;
+  border-color: #2e6da4; }
+.btn-primary .badge, .chat-window .panel-footer .btn-chat .badge {
+  color: #337ab7;
+  background-color: #fff; }
+.btn-sm, .btn-group-sm > .btn, .chat-window .panel-footer .btn-chat {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px; }
+
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .chat-window .top-bar .panel-buttons-container, .chat-window .msg-container .avatar, .col-sm-2, .col-md-2, .chat-window .top-bar .panel-buttons-container, .chat-window .msg-container .avatar, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .conversation-wrap, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .chat-window, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .chat-window, .chat-window .top-bar .panel-title-container, .chat-window .messages, .col-sm-10, .col-md-10, .chat-window .top-bar .panel-title-container, .chat-window .messages, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .chat-window .panel-container, .col-sm-12, .col-md-12, .chat-window .panel-container, .col-lg-12 {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px; }
+
+.img-responsive, .chat-window .msg-container .avatar img {
+  display: block;
+  max-width: 100%;
+  height: auto; }
+
+.col-xs-1, .col-xs-2, .chat-window .top-bar .panel-buttons-container, .chat-window .msg-container .avatar, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10,
+.chat-window, .chat-window .top-bar .panel-title-container, .chat-window .messages, .col-xs-11, .col-xs-12, .chat-window .panel-container {
+  float: left; }
+.col-xs-10, .chat-window, .chat-window .top-bar .panel-title-container, .chat-window .messages {
+  /*width: 83.33333%; */}
+.row, .chat-window-container, .chat-window .msg-container {
+  margin-left: -15px;
+  margin-right: -15px; }
+.row:before, .chat-window-container:before, .chat-window .msg-container:before, .row:after, .chat-window-container:after, .chat-window .msg-container:after {
+  content: " ";
+  display: table; }
+.row:after, .chat-window-container:after, .chat-window .msg-container:after {
+  clear: both; }
+
+.conversation-wrap {
+  box-shadow: -2px 0 3px #ddd;
+  padding:0;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 25%;
+  float: left;
+
+  .conversation {
+    position: relative;
+    display: block;
+    padding:5px;
+    border-bottom:1px solid #ddd;
+    margin:0;
+
+    .avatar {
+      width: 50px;
+      height: 50px;
+    }
+
+
+    &:hover {
+      cursor: hand;
+      cursor: pointer;
+      opacity: .8;
+    }
+
+    // http://ctrlq.org/code/19639-turn-div-clickable-link
+    .div-link {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      text-decoration: none;
+      /* Makes sure the link doesn't get underlined */
+      z-index: 10;
+      /* raises anchor tag above everything else in div */
+      background-color: white;
+      /*workaround to make clickable in IE */
+      opacity: 0;
+      /*workaround to make clickable in IE */
+      filter: alpha(opacity=0);
+      /*workaround to make clickable in IE */
+    }
+
+  }
+
+  &::-webkit-scrollbar {
+    //width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background:#ddd;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+  }
+  &::-webkit-scrollbar-thumb:window-inactive {
+    background: #ddd;
+  }
+}
+
+
+.chat li {
+  background-color: white;
+}
+.chat-window-container {
+  @extend .row;
+}
+
+.chat-window {
+  @extend .col-xs-10, .col-sm-5;
+
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  float: right;
+  margin-left: 10px;
+
+  .panel-container {
+    @extend .col-xs-12;
+    @extend .col-md-12;
+  }
+
+  > div > .panel {
+    border-radius: 5px 5px 0 0;
+  }
+
+  .panel-footer {
+    .chat-input {
+      @extend .input-sm;
+      @extend .form-control;
+    }
+
+    .btn-chat {
+      @extend .btn;
+      @extend .btn-primary;
+      @extend .btn-sm;
+    }
+  }
+
+  .col-md-2, .col-md-10 {
+    padding: 0;
+  }
+
+  .panel {
+    margin-bottom: 0px;
+  }
+
+  .icon_minim {
+    padding: 2px 10px;
+  }
+
+  .msg-container-base {
+    background: #e5e5e5;
+    margin: 0;
+    padding: 0 10px 10px;
+    max-height: 300px;
+    overflow-x: hidden;
+  }
+
+  .top-bar {
+    background: #666;
+    color: white;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+
+    .panel-title-container {
+      @extend .col-md-10;
+      @extend .col-xs-10;
+    }
+    .panel-buttons-container {
+      @extend .col-md-2;
+      @extend .col-xs-2;
+    }
+  }
+
+  .msg-receive {
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .msg-sent {
+    padding-bottom: 20px !important;
+    margin-right: 0;
+  }
+
+  .messages {
+    @extend .col-md-10;
+    @extend .col-xs-10;
+
+    background: white;
+    padding: 10px;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+    > {
+      p {
+        font-size: 13px;
+        margin: 0 0 0.2rem 0;
+      }
+      .time {
+        font-size: 11px;
+        color: #ccc;
+      }
+    }
+  }
+
+  .msg-container {
+    @extend .row;
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+
+    .avatar {
+      @extend .col-md-2;
+      @extend .col-xs-2;
+
+      img {
+        @extend .img-responsive;
+      }
+    }
+  }
+
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  .avatar {
+    position: relative;
+  }
+
+  .base-receive > .avatar:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border: 5px solid #FFF;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+  }
+
+  .base-sent {
+    justify-content: flex-end;
+    align-items: flex-end;
+    > .avatar:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border: 5px solid white;
+      border-right-color: transparent;
+      border-top-color: transparent;
+      box-shadow: 1px 1px 2px rgba(black, 0.2);
+    }
+  }
+
+  .msg-sent > .time {
+    float: right;
+  }
+
+  .msg-container-base {
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: #F5F5F5;
+    }
+    &::-webkit-scrollbar {
+      width: 12px;
+      background-color: #F5F5F5;
+    }
+    &::-webkit-scrollbar-thumb {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: #555;
+    }
+  }
+
+  .btn-group.dropup {
+    position: fixed;
+    left: 0px;
+    bottom: 0;
+  }
+
+}
+
+.navbar-brand {
+  img {
+    float: left;
+    top: -10px;
+    position: relative;
+    margin-right: 10px;
+  }
+
+}
+
+.navbar-text {
+  padding-right: 110px;
+}

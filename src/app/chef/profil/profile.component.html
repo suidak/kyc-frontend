@@ -1,0 +1,188 @@
+<div class="card card-default">
+  <div class="card-header" style="color: #ffffff;background-color: #615e58;">
+    <i class="icon-user"></i>
+    Profil
+
+    <div style=" float: right;">
+      {{ 'ADMIN.AUJOURDHUI' | translate }}: <span id="ejs_heure" style="font-weight: bolder;"  ></span>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="card">
+  <div class="card-block">
+    <div class="row" >
+      <div class="col-sm-2" style="text-align: center;">
+       <span *ngIf="user" class="profile-picture" style="height: 182px; width: 202px;">
+         <img  id="avatar" class="editable img-responsive editable-click editable-empty" alt="{{user.mail}}" style="width: 100%;height: 100%;" src="/assets/public/avatar/{{user.photo}}"  />
+       </span>
+
+
+        <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+          <div class="inline position-relative">
+
+              <span class="white" *ngIf="user" style=" color: #fff;font-weight: bold;font-size: 15px;">
+                {{user.nom}} {{user.prenom}}
+              </span>
+
+          </div>
+        </div>
+  </div>
+      <div class="col-sm-10" *ngIf="!openeEditPwd">
+
+
+        <div class="profile-user-info profile-user-info-striped">
+          <div class="profile-info-row">
+          <div class="profile-info-name"> {{ 'ADMIN.Type' | translate }}  </div>
+
+          <div class="profile-info-value">
+            <span class="editable editable-click" id="username">{{user.typeUser}}</span>
+          </div>
+        </div>
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.Login' | translate }}  </div>
+
+            <div class="profile-info-value">
+              <span class="editable editable-click" id="login">{{user.login}}</span>
+            </div>
+          </div>
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.Email' | translate }}  </div>
+
+            <div class="profile-info-value">
+              <span class="editable editable-click" id="mail">{{user.mail}}</span>
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name">{{ 'ADMIN.Emplacement' | translate }}  </div>
+
+            <div class="profile-info-value">
+              <i class="fa fa-map-marker light-orange bigger-110"></i>
+              <span class="editable editable-click" id="country">{{user.adresse}}</span>
+              <span class="editable editable-click" id="city">{{user.ville}}</span>
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.Telephone' | translate }} </div>
+
+            <div class="profile-info-value">
+              <span class="editable editable-click" id="Telephone">{{user.tel}}</span>
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.Datenaissence' | translate }} </div>
+
+            <div class="profile-info-value">
+              <span class="editable editable-click" id="Datenaissence" *ngIf="user.datenaissence">{{user.datenaissence.slice( 0, 10 )}}</span>
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.DateCreation' | translate }} </div>
+
+            <div class="profile-info-value">
+              <span class="editable editable-click" id="dateCreation">{{user.dateCreation.slice( 0, 10 )}}</span>
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+
+
+      </div>
+      <div class="col-sm-10" *ngIf="openeEditPwd">
+
+        <div *ngIf="alertsSuccess">
+          <div  class="alert alert-success" role="alert" >
+            <strong> {{ alertsSuccessMsg }}</strong>
+          </div>
+
+
+        </div>
+
+        <div *ngIf="alertsDanger" class="alert alert-danger" role="alert">
+          <strong> {{ alertsDangerMsg }}!</strong>
+        </div>
+
+        <form  [formGroup]="editPwdForm" (ngSubmit)="editPwd()">
+
+          <div class="form-group row">
+
+            <div class="profile-user-info profile-user-info-striped">
+              <div class="profile-info-row">
+                <div class="profile-info-name">{{ 'ADMIN.Mot de passe actuelle' | translate }} </div>
+
+                <div class="profile-info-value">
+
+                  <input class="form-control" type="text"  formControlName="password" placeholder="password" minlength="8" maxlength="12"  >
+                </div>
+              </div>
+              <div class="profile-info-row">
+                <div class="profile-info-name"> {{ 'ADMIN.Nouveau mot de passe' | translate }}</div>
+
+                <div class="profile-info-value">
+
+                  <input class="form-control" type="text"  formControlName="newPassword" placeholder="newPassword" minlength="8" maxlength="12"  >
+                </div>
+              </div>
+
+              <div class="profile-info-row">
+                <div class="profile-info-name"> {{ 'ADMIN.Confirmation mot de passe' | translate }}</div>
+
+                <div class="profile-info-value">
+
+                  <input class="form-control" type="text" validateEqual="newPassword"  formControlName="cofPassword" placeholder="cofPassword" minlength="8" maxlength="12"  >
+                </div>
+              </div>
+
+
+            </div>
+
+            <!-- /section:pages/profile.info -->
+
+
+
+
+
+          </div>
+
+
+
+          <div class="col-xl-12">
+            <button class="btn btn-sm btn-primary" type="submit" [disabled]="!editPwdForm.valid"><i class="fa fa-floppy-o"></i>
+              {{ 'ADMIN.Enregistrer' | translate }}
+            </button>
+          </div>
+
+        </form>
+
+
+
+      </div>
+      <div class="col-sm-12" style="text-align: right;">
+
+        <div class="card-block">
+          <button type="button" (click)="openedEditPwd()" class="btn btn-secondary">{{ 'ADMIN.Modifier votre mot de passe' | translate }}</button>
+          <button type="button" (click)="openedEditProfile()" class="btn btn-secondary">{{ 'ADMIN.Modifier votre profil' | translate }}</button>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="row" *ngIf="openeEditProfile">
+
+    </div>
+
+  </div>
+</div>

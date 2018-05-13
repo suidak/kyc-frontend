@@ -1,0 +1,1375 @@
+
+<div class="row">
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header" style="border: 1px solid #9208b4;padding: 0;">
+        <i class="fa fa-exchange " style="background: #9208b4;color: white;padding: 0.75rem 1.25rem; font-size: 20px"></i>
+        Acces/Materiel
+
+        <div style="float: right; transform: translateX(-10px)translateY(5px);">
+          <button type="button" class="btn btn-danger btn-sm" (click)="openAccecEntre();myModal.open();"> {{ 'ADMIN.Entrée' | translate }} <i class="icon-arrow-down-circle icons"></i></button>
+          <button type="button" class="btn btn-success btn-sm" (click)="myModalSorti.open();actionSorty();">{{ 'ADMIN.Sortie' | translate }} <i class="icon-arrow-up-circle icons"></i></button>
+        </div>
+
+      </div>
+      <div >
+        <table class="table table-striped">
+          <thead >
+          <tr>
+            <th></th>
+            <th>Présents  <i class="icon-arrow-down-circle icons" style="color: red;"></i> </th>
+
+            <th>Clés  <i class="icon-arrow-down-circle icons" style="color: red;"></i></th>
+
+            <th>Matériel  <i class="icon-arrow-down-circle icons" style="color: red;"></i></th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td> <span style="font-weight: bold;">{{ 'ADMIN.Visitor’s' | translate }}</span></td>
+            <td>
+              {{ visitorEntre }}
+
+              <button  data-last="Finish" (click)="getactivitesAccesEtatType('Visiteur','In');myModalInfoAcces.open();" >
+                <i class="icon-user icons" style="color: red;"></i>
+              </button>
+            </td>
+
+            <td> {{ clevisitorEntre }}
+
+              <button  data-last="Finish" (click)="getMateriellesAcces('In','Cle','Visiteur');myModalInfoMatrielles.open();" >
+                <i class="icon-key icons" style="color: red;"></i>
+              </button>
+
+            </td>
+
+            <td> {{ matvisitorEntre }}
+              <button  data-last="Finish" (click)="getMateriellesAcces('In','Materielle','Visiteur');myModalInfoMatrielles.open();" >
+                <i class="icon-briefcase icons" style="color: red;"></i>
+              </button>
+            </td>
+
+          </tr>
+          <tr>
+            <td><span style="font-weight: bold;">{{ 'ADMIN.Contractor’s' | translate }}</span></td>
+            <td> {{ contractorEntre }}
+              <button  data-last="Finish" (click)="getactivitesAccesEtatType('Contacteur','In');myModalInfoAcces.open();" >
+                <i class="icon-user icons" style="color: red;"></i>
+              </button>
+            </td>
+
+            <td> {{ clecontractorEntre }}
+              <button  data-last="Finish" (click)="getMateriellesAcces('In','Cle','Contacteur');myModalInfoMatrielles.open();" >
+                <i class="icon-key icons" style="color: red;"></i>
+              </button>
+            </td>
+
+            <td> {{ matcontractorEntre }}
+              <button  data-last="Finish" (click)="getMateriellesAcces('In','Materielle','Contacteur');myModalInfoMatrielles.open();" >
+                <i class="icon-briefcase icons" style="color: red;"></i>
+              </button>
+            </td>
+
+          </tr>
+          <tr>
+            <td><span style="font-weight: bold;">Permanents</span></td>
+            <td> {{ permanentEntre }}
+              <button  data-last="Finish" (click)="getactivitesAccesEtatType('Permanent','In');myModalInfoAcces.open();" >
+                <i class="icon-user icons" style="color: red;"></i>
+              </button>
+            </td>
+
+            <td> {{ clepermanentEntre }}
+              <button  data-last="Finish" (click)="getMateriellesAcces('In','Cle','Permanent');myModalInfoMatrielles.open();" >
+                <i class="icon-key icons" style="color: red;"></i>
+              </button>
+            </td>
+
+            <td> {{ matpermanentEntre }}
+              <button  data-last="Finish" (click)="getMateriellesAcces('In','Materielle','Permanent');myModalInfoMatrielles.open();" >
+                <i class="icon-briefcase icons" style="color: red;"></i>
+              </button>
+            </td>
+
+          </tr>
+          <tr>
+            <td><span style="font-weight: bold;">Réunions</span></td>
+            <td>  {{ othersEntre }}
+              <button  data-last="Finish" (click)="getactivitesAccesEtatType('Réunion','In');myModalInfoAcces.open();" >
+                <i class="icon-user icons" style="color: red;"></i>
+              </button>
+            </td>
+
+            <td>{{ cleothersEntre }}
+              <button  data-last="Finish" (click)="getMateriellesAcces('In','Cle','Réunion');myModalInfoMatrielles.open();" >
+                <i class="icon-key icons" style="color: red;"></i>
+              </button>
+
+            </td>
+
+            <td>{{ matothersEntre }}
+              <button  data-last="Finish" (click)="getMateriellesAcces('In','Materielle','Réunion');myModalInfoMatrielles.open();" >
+                <i class="icon-briefcase icons" style="color: red;"></i>
+              </button>
+            </td>
+
+          </tr>
+          <tr>
+            <td><span style="font-weight: bold;">{{ 'ADMIN.Total' | translate }}</span></td>
+            <td>  {{ totalvisitorEntre }}
+              <button  data-last="Finish" (click)="getactivitesAccesEtat('In');myModalInfoAcces.open();" >
+                <i class="icon-user icons" style="color: red;"></i>
+              </button>
+            </td>
+
+            <td>{{ cletotalvisitorEntre }}
+              <button  data-last="Finish" (click)="getMateriellesAccesnoTypeUser('In','Cle');myModalInfoMatrielles.open();" >
+                <i class="icon-key icons" style="color: red;"></i>
+              </button>
+            </td>
+
+            <td>{{ mattotalvisitorEntre }}
+              <button  data-last="Finish" (click)="getMateriellesAccesnoTypeUser('In','Materielle');myModalInfoMatrielles.open();" >
+                <i class="icon-briefcase icons" style="color: red;"></i>
+              </button>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <infosite-cmp></infosite-cmp>
+  </div>
+
+</div>
+
+
+<modal #myModal modalClass="modal-lg" >
+  <modal-header>
+    <h1>{{ 'ADMIN.Entrée' | translate }}</h1>
+  </modal-header>
+  <modal-content>
+
+<div class="col-xs-12">
+  <div *ngIf="alertsSuccess">
+    <div  class="alert alert-success" role="alert" >
+      <strong> {{ alertsSuccessMsg }}</strong>
+    </div>
+
+    <div class="col-md-12">
+
+      <div #{{printpage}} id="printpage" *ngIf="newAcces && newAcces.type!='Permanent'">
+        <div style="width: 520px;height: 247px;border: 2px solid #cfd8dc;border-radius: 9px;" *ngIf="newAcces">
+          <div style="margin: 5px;">
+            <div  style="width: 100%;height: 76px;">
+              <div style="float: left; width: 67%;">
+                <div style="    text-align: center;font-size: 37px;font-weight: bold;font-family: fantasy;">
+
+                  VISITEUR
+
+                </div>
+
+              </div>
+              <div style="float: right;" *ngIf="!siteActuelle.logo">
+                <img src="/assets/img/logo-factgroup.png" style="width: 61%;float: right;" >
+
+              </div>
+              <div style="float: right;" *ngIf="siteActuelle.logo">
+                <img src="/assets/public/site/{{siteActuelle.logo}}" style="max-width: 103px;float: right;">
+              </div>
+            </div>
+
+            <div  style="width: 100%;">
+              <div style="float: left; width: 70%">
+
+
+                <div style="float: left">
+                  <span style="font-weight: bold"> Nom: {{ newAcces.nom}}</span><br>
+                  <span style="font-weight: bold"> Prénom: {{ newAcces.prenom}}</span><br>
+                  <span style="font-weight: bold"> Société: {{ newAcces.societe}}</span><br>
+                  <span style="font-weight: bold"> Date: {{ newAcces.dateEntre.slice( 0, 10 )| date:'dd-MM-yyyy'}} {{ newAcces.dateEntre.slice( 11, 16 )}}</span><br>
+                  <span style="font-weight: bold" *ngIf="newAcces.personneVisite"> Personne visitée: {{ newAcces.personneVisite}} </span><br>
+                  <span style="font-weight: bold"> Emplacement: {{ newAcces.emplacement.name}} </span>
+
+                </div>
+              </div>
+              <div style="float: right;width: 29%">
+                <div>
+                  <img src="/assets/public/codeBar/{{newAcces.photoCodeBar}}" style="float: right;" >
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-success btn-sm" *ngIf="newAcces && newAcces.type!='Permanent'"
+              (click)="printBadge('printpage');">
+        {{ 'ADMIN.print' | translate }} <i class="icon-printer icons"></i>
+      </button>
+
+
+
+    </div>
+
+
+    <div class="col-md-12" style="visibility: hidden">
+
+      <div #{{printpage}} id="printpage2">
+        <div style="width:336px;height:136px;border: 2px solid #cfd8dc;" *ngIf="newAcces">
+          <div style="width:86px;float:left;height:136px;">
+
+            <div  *ngIf="siteActuelle.logo">
+
+              <img src="/assets/public/site/{{siteActuelle.logo}}"   alt="rrer" style="max-width:85px" />
+            </div>
+          </div>
+
+          <div style="width:246px;float:right;">
+            <div style="width:246px;float:left;">
+              <table width="246" border="0" style="font-size: 11px;font-weight: bold;">
+                <tr>
+                  <td width="146"><strong><em style="font-size: 20px;">VISITEUR</em></strong></td>
+                  <td width="90">{{newAcces.dateEntre | date: 'dd/MM/yyyy'}} {{ newAcces.dateEntre.slice( 11, 16 )}}</td>
+                </tr>
+              </table>
+            </div>
+            <div style="width:246px;float:left;font-size: 10px;font-weight: bold;">
+              <table width="246"  border="0">
+                <tr>
+                  <td width="61">Nom : </td>
+                  <td colspan="3">{{ newAcces.nom}} {{ newAcces.prenom}} ({{ newAcces.societe}}) </td>
+                </tr>
+                <tr>
+                  <td colspan="4">
+                    <hr style="border-top: 1px solid;margin: 5px;" />
+                  </td>
+                </tr>
+                <tr *ngIf="newAcces.personneVisiteObject">
+                  <td rowspan="3">
+                    <img src="/assets/img/infoCart.png"   alt="rrer" style="max-width:60px" />
+
+                  </td>
+                  <td width="70">NOM</td>
+                  <td width="7">:</td>
+                  <td width="80">{{ newAcces.personneVisiteObject.nom}}</td>
+                </tr>
+                <tr *ngIf="newAcces.personneVisite">
+                  <td>PRENOM</td>
+                  <td>:</td>
+                  <td>{{ newAcces.personneVisiteObject.prenom}}</td>
+                </tr >
+                <tr *ngIf="newAcces.personneVisite">
+                  <td>TEL &amp; LOCAL</td>
+                  <td>:</td>
+                  <td>{{ newAcces.personneVisiteObject.fonction}}</td>
+                </tr>
+              </table>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-success btn-sm"
+              (click)="printBadge('printpage2');">
+        {{ 'ADMIN.print' | translate }} <i class="icon-printer icons"></i>
+      </button>
+
+
+
+    </div>
+
+
+
+
+    <div class="col-xl-12" style="text-align: right;">
+      <button class="btn  btn-success" type="submit" (click)=" openAccecEntre();"><i class="fa fa-floppy-o"></i>
+        {{ 'ADMIN.Ajouter une autre' | translate }}
+      </button>
+    </div>
+
+  </div>
+
+  <div *ngIf="alertsDanger" class="alert alert-danger" role="alert">
+    <strong> {{ alertsDangerMsg }}!</strong>
+  </div>
+</div>
+
+    <div class="col-xs-12" *ngIf="!alertsSuccess">
+      <form  [formGroup]="addAccesForm" (ngSubmit)="addAcces()" class="col-xs-12" >
+
+    <div class="form-group row col-xs-12">
+      <div class="col-md-6" >
+        <div class="profile-user-info profile-user-info-striped">
+
+          <div class="profile-info-row">
+            <div class="profile-info-name">{{ 'ADMIN.Type' | translate }} </div>
+
+            <div class="profile-info-value">
+              <select class="form-control "  formControlName="type" (ngModelChange)="appelMethode($event);">
+                <option *ngFor="let x of listeTypeUser" [value]="x">{{x}}</option>
+              </select>
+
+
+            </div>
+          </div>
+
+          <div class="profile-info-row" *ngIf="!isPermant">
+            <div class="profile-info-name">{{ 'ADMIN.Societe' | translate }} </div>
+
+            <div class="profile-info-value">
+              <input class="form-control" type="text"
+                     placeholder="Societe" formControlName="societe"  >
+
+
+            </div>
+          </div>
+
+          <div class="profile-info-row" *ngIf="!isPermant">
+            <div class="profile-info-name"> {{ 'ADMIN.Nom' | translate }} </div>
+
+            <div class="profile-info-value">
+
+              <input class="form-control" type="text"
+                     formControlName="nom" placeholder="nom"  >
+            </div>
+          </div>
+
+          <div class="profile-info-row" *ngIf="!isPermant">
+            <div class="profile-info-name"> Prénom </div>
+
+            <div class="profile-info-value">
+
+              <input class="form-control" type="text"
+                     formControlName="prenom" placeholder="prenom"  >
+            </div>
+          </div>
+
+          <div class="profile-info-row" *ngIf="!isPermant">
+            <div class="profile-info-name">{{ 'ADMIN.Emplacement' | translate }} </div>
+
+            <div class="profile-info-value">
+              <select class="form-control "  formControlName="emplacement">
+                <option *ngFor="let z of zones" [ngValue]="z">{{z.name}}</option>
+              </select>
+
+
+            </div>
+          </div>
+
+          <div class="profile-info-row" *ngIf="!isPermant">
+            <div class="profile-info-name"> {{ 'ADMIN.Personne visitée' | translate }} </div>
+
+            <div class="profile-info-value">
+              <input  ng2-auto-complete
+                      formControlName="personneVisite"
+                      [source]="listePermanons"
+                      [list-formatter]="autocompleListFormatter"
+                      value-property-name="nom"
+                      display-property-name="nom"
+                      placeholder="personneVisite"
+                      class="form-control">
+            </div>
+          </div>
+
+          <div class="profile-info-row" *ngIf="isPermant">
+            <div class="profile-info-name"> Permanent </div>
+
+            <div class="profile-info-value">
+              <input  ng2-auto-complete
+                      formControlName="permant"
+                      [required]="isPermant"
+                      [source]="listePermanons"
+                      [list-formatter]="autocompleListFormatter"
+                      value-property-name="nom"
+                      display-property-name="nom"
+                      placeholder="Permanent"
+                      class="form-control">
+            </div>
+          </div>
+
+
+
+        </div>
+
+        <!-- /section:pages/profile.info -->
+
+
+      </div>
+      <div class="col-md-6">
+
+
+        <div class="profile-user-info profile-user-info-striped">
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.numBadge' | translate }} </div>
+
+            <div class="profile-info-value">
+
+              <input class="form-control" type="text"  formControlName="numBadge" placeholder="numBadge"  >
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.PermisFeu' | translate }} </div>
+
+            <div class="profile-info-value">
+
+              <input class="form-control" type="text"  formControlName="permisFeu" placeholder="permisFeu"  >
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.numPF' | translate }} </div>
+
+            <div class="profile-info-value">
+
+              <input class="form-control" type="text"  formControlName="numPF" placeholder="numPF"  >
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.Motif' | translate }} </div>
+
+            <div class="profile-info-value">
+
+              <input class="form-control" type="text"  formControlName="motif" placeholder="motif"  >
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name">{{ 'ADMIN.notifComplement' | translate }} </div>
+
+            <div class="profile-info-value">
+              <textarea class="form-control" id="form-field-8" formControlName="notifComplement" placeholder="notifComplement" ></textarea>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+  <div class="col-xs-12">
+    <div class="col-xs-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Reservation Materiel </strong>
+
+
+          <div class="card-actions">
+            <button aria-controls="collapseExample" aria-expanded="false" class="btn-minimize" data-target="" data-toggle="collapse" type="button" (click)="openresMat();">
+              <i class="icon-arrow-up" *ngIf="isopenMat"></i>
+              <i class="icon-arrow-down" *ngIf="!isopenMat"></i>
+            </button>
+
+          </div>
+        </div>
+        <div class="card-block" *ngIf="isopenMat">
+          <div class="center">
+            <h3 class="blue lighter">Choisir des Matériels </h3>
+
+            <div class="row" *ngIf="isListeMaterielles">
+              <div class="col-md-12">
+
+                <div class='table-responsive'>
+                  <table  id="example2"  class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                      <th class="text-center"><i class="icon-people"></i></th>
+                      <th>{{ 'ADMIN.Nom' | translate }}</th>
+                      <th>{{ 'ADMIN.Code' | translate }}</th>
+                      <th>{{ 'ADMIN.Action' | translate }}</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                      <th></th>
+
+                      <th>{{ 'ADMIN.Nom' | translate }}</th>
+                      <th>{{ 'ADMIN.Code' | translate }}</th>
+                      <th></th>
+
+
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <tr  *ngFor='let matrielle of materielles; let i = index' >
+                      <td class="text-center">
+                        <div class="avatar">
+                          <img src="/assets/public/materielle/{{matrielle.photo}}" class="img-avatar"  *ngIf="matrielle.photo">
+                          <img src="/assets/public/materielle/materielle.jpg" class="img-avatar"   *ngIf="!matrielle.photo">
+                          <span class="avatar-status badge-success"></span>
+                        </div>
+                      </td>
+
+
+                      <td>{{ matrielle.name}}</td>
+                      <td>
+                        <div class="">
+                          <a target="_blank" href="/assets/public/codeBar/{{matrielle.photoCodeBar}}" *ngIf="matrielle.photoCodeBar64">
+                            <img src="/assets/public/codeBar/{{matrielle.photoCodeBar}}" class="" alt="{{ matrielle.codeBar}}" >
+                          </a>
+                          <span style="visibility: hidden;font-size: 0px;">{{matrielle.codeBar}}</span>
+
+                          <span class="avatar-status badge-success"></span>
+                        </div>
+
+                      </td>
+                      <td>
+
+
+                        <input #{{matrielle._id}} formControlName="cheke" [(ngModel)]="matrielle.selected" #cvm [checked]=false type="checkbox" (change)="checkboxmat(matrielle,cvm.checked,i)">
+
+
+
+                      </td>
+                    </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-xs-12">
+    <div class="col-xs-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Reservation cles </strong>
+          <div class="card-actions">
+
+            <button aria-controls="collapseExample" aria-expanded="false" class="btn-minimize" data-target="" data-toggle="collapse" type="button" (click)=" openrescle();">
+              <i class="icon-arrow-up" *ngIf="isopenCle"></i>
+              <i class="icon-arrow-down" *ngIf="!isopenCle"></i>
+            </button>
+
+          </div>
+        </div>
+        <div class="card-block"  *ngIf="isopenCle">
+          <div class="center">
+            <h3 class="blue lighter">Choisir des clés </h3>
+
+            <div class="row" *ngIf="isListeCles">
+              <div class="col-md-12">
+
+                <div class='table-responsive'>
+                  <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+
+
+                      <th>{{ 'ADMIN.Nom' | translate }}</th>
+                      <th>{{ 'ADMIN.Code' | translate }}</th>
+                      <th>{{ 'ADMIN.Action' | translate }}</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+
+                      <th>{{ 'ADMIN.Nom' | translate }}</th>
+                      <th>{{ 'ADMIN.Code' | translate }}</th>
+                      <th>{{ 'ADMIN.Action' | translate }}</th>
+
+
+
+                    </tr>
+                    </tfoot>
+
+                    <tbody>
+                    <tr  *ngFor='let cle of cles; let i = index' >
+
+
+
+                      <td>{{ cle.name}}</td>
+                      <td>
+                        <div class="">
+                          <a target="_blank" href="/assets/public/codeBar/{{cle.photoCodeBar}}" *ngIf="cle.photoCodeBar64">
+                            <img src="/assets/public/codeBar/{{cle.photoCodeBar}}" class="" alt="{{ cle.codeBar}}" >
+                          </a>
+                          <span style="visibility: hidden;font-size: 0px;">{{cle.codeBar}}</span>
+
+                          <span class="avatar-status badge-success"></span>
+                        </div>
+
+                      </td>
+                      <td>
+
+                        <input #{{cle._id}} formControlName="chekec"  [(ngModel)]="cle.selected" #cvm [checked]=false type="checkbox" (change)="checkboxcle(cle,cvm.checked,i)">
+
+
+                      </td>
+                    </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+    <div class="col-12" style="text-align: right;">
+      <button class="btn btn-success" type="submit" [disabled]="!addAccesForm.valid"><i class="fa fa-floppy-o"></i>
+        {{ 'ADMIN.Enregistrer' | translate }}
+      </button>
+    </div>
+
+
+  </form>
+    </div>
+
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="miseAjourActivity();myModal.close();closeAcceEntre();">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+<modal #myModalSorti modalClass="modal-lg" >
+  <modal-header>
+    <h1>{{ 'ADMIN.Sortie' | translate }}</h1>
+  </modal-header>
+  <modal-content>
+
+    <div class="center">
+      <h3 class="blue lighter">{{ 'ADMIN.Validation Sortie' | translate }}</h3>
+
+      <div class="row" *ngIf="isListeAccesEntre">
+        <div class="col-md-12">
+
+          <div class='table-responsive'>
+            <table  class="table table-striped table-bordered" cellspacing="0" width="100%">
+              <thead>
+              <tr>
+                <th>{{ 'ADMIN.Type' | translate }}</th>
+                <th>{{ 'ADMIN.Societe' | translate }}</th>
+
+                <th>{{ 'ADMIN.Nom' | translate }}</th>
+                <th>{{ 'ADMIN.Emplacement' | translate }}</th>
+                <th>{{ 'ADMIN.DateEntre' | translate }}</th>
+                <th>{{ 'ADMIN.Action' | translate }}</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr  *ngFor='let acce of activitesEntre' >
+
+                <td>{{ acce.type}}</td>
+                <td>{{ acce.societe}}</td>
+
+                <td>{{ acce.nom}} {{ acce.prenom}}</td>
+                <td><span *ngIf="acce.emplacement!=null">{{ acce.emplacement.name}}</span></td>
+                <td>{{ acce.dateEntre | date:'dd-MM-yyyy'}} {{ acce.dateEntre.slice( 11, 16 )}}</td>
+                <td>
+
+                  <button type="button" class="btn btn-success btn-sm" (click)="accesSorty(acce);">{{ 'ADMIN.Sortie' | translate }} <i class="icon-arrow-up-circle icons"></i></button>
+                </td>
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+
+
+
+        </div>
+
+      </div>
+
+      <div class="row" *ngIf="isListeMaterelleEntre || validationVisiteurSorti">
+        <div class="col-md-12">
+
+          <div class="form-group row">
+
+            <div class="col-md-6">
+
+              <div class="profile-user-info profile-user-info-striped">
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Type' | translate }} </div>
+                  <div class="profile-info-value">
+                    <span class="editable editable-click" id="name">{{accesEntreActuelle.type}}</span>
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Nom' | translate }}</div>
+                  <div class="profile-info-value">
+
+                    <span class="editable editable-click" id="nomPrenon">{{accesEntreActuelle.nom}} {{accesEntreActuelle.prenom}}</span>
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Badge' | translate }} </div>
+                  <div class="profile-info-value">
+
+                    <span class="editable editable-click" id="numBadge">{{accesEntreActuelle.numBadge}}</span>
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+            <div class="col-md-6">
+
+              <div class="profile-user-info profile-user-info-striped">
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Societe' | translate }}</div>
+                  <div class="profile-info-value">
+
+                    <span class="editable editable-click" id="societe">{{accesEntreActuelle.societe}}</span>
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Emplacement' | translate }}</div>
+                  <div class="profile-info-value">
+
+                    <span class="editable editable-click" id="emplacement"  *ngIf="accesEntreActuelle.emplacement!=null">{{accesEntreActuelle.emplacement.name}}</span>
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.dateEntre' | translate }}</div>
+                  <div class="profile-info-value">
+                    <span class="editable editable-click" id="dateEntre">{{accesEntreActuelle.dateEntre| date:'dd-MM-yyyy'}} {{ accesEntreActuelle.dateEntre.slice( 11, 16 )}}</span>
+
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+            </div>
+
+          </div>
+
+          <button class="btn btn-primary" style="text-align: center" type="submit"  *ngIf="validationVisiteurSorti" (click)="accesUserSorty(accesEntreActuelle);"><i class="fa fa-floppy-o"></i>
+            Validation
+          </button>
+
+
+
+          <div class='table-responsive'  *ngIf="isListeMaterelleEntre">
+            <table  class="table table-striped table-bordered" cellspacing="0" width="100%">
+              <thead>
+              <tr>
+                <th>{{ 'ADMIN.Type' | translate }}</th>
+                <th>{{ 'ADMIN.Code' | translate }}</th>
+                <th>{{ 'ADMIN.Nom' | translate }}</th>
+                <th>{{ 'ADMIN.Action' | translate }}</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr  *ngFor='let acce of listesMaterellesEntre' >
+
+                <td>{{ acce.type}}</td>
+                <td>
+                  <div class="">
+                    <a target="_blank" href="/assets/public/codeBar/{{ acce.objetType.photoCodeBar}}" *ngIf=" acce.objetType.photoCodeBar64">
+                      <img src="/assets/public/codeBar/{{acce.objetType.photoCodeBar}}" class="" alt="{{ acce.objetType.codeBar}}" >
+                    </a>
+                    <span style="visibility: hidden;font-size: 0px;">{{ acce.objetType.codeBar}}</span>
+
+                    <span class="avatar-status badge-success"></span>
+                  </div>
+                </td>
+                <td>{{ acce.objetType.name}} </td>
+
+                <td>
+                  <button type="button" class="btn btn-success btn-sm" (click)="accesMaterilleSorty(acce);">Sortie <i class="icon-arrow-up-circle icons"></i></button>
+                </td>
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+
+
+
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="miseAjourActivity();myModalSorti.close()">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+
+<modal #myModalInfoAcces modalClass="modal-lg" >
+  <modal-header>
+  </modal-header>
+  <modal-content>
+
+    <div class="center" >
+      <div class='table-responsive' *ngIf="!isModifAcces">
+        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+          <thead>
+          <tr>
+            <th>{{ 'ADMIN.Type' | translate }}</th>
+            <th>{{ 'ADMIN.Societe' | translate }}</th>
+            <th>{{ 'ADMIN.Nom' | translate }}</th>
+            <th>{{ 'ADMIN.DateEntre' | translate }}</th>
+            <th>{{ 'ADMIN.DateSortie' | translate }}</th>
+            <th>{{ 'ADMIN.Etat' | translate }}</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr  *ngFor='let use of activitesAcces' >
+            <td>
+              {{ use.type}}
+            </td>
+            <td>{{ use.societe}}</td>
+            <td> {{ use.nom}} {{ use.prenom}}</td>
+
+            <td>{{ use.dateEntre}}</td>
+            <td> {{ use.dateSorti}} </td>
+            <td>
+              <span class="btn btn-success btn-sm" *ngIf="use.etat=='Out'">{{ 'ADMIN.Sortie' | translate }} <i class="icon-arrow-up-circle icons"></i></span>
+              <span class="btn btn-danger btn-sm" *ngIf="use.etat=='In'">{{ 'ADMIN.Entrée' | translate }} <i class="icon-arrow-down-circle icons"></i></span>
+            </td>
+            <td>
+              <button type="button" class="green" (click)="openedEditAcces(use);" *ngIf="use.etat=='In'" >
+                <i class="ace-icon fa fa-pencil bigger-130"></i>
+              </button>
+            </td>
+
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+
+
+      <div class="col-xs-12" *ngIf="isModifAcces">
+
+
+          <div class="form-group row col-xs-12">
+            <div class="col-md-6" >
+              <div class="profile-user-info profile-user-info-striped">
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.Type' | translate }} </div>
+
+                  <div class="profile-info-value">
+                    <span>
+                      {{accesModif.type}}
+                    </span>
+
+
+                  </div>
+                </div>
+
+                <div class="profile-info-row" *ngIf="accesModif.type!='Permanent'">
+                  <div class="profile-info-name">{{ 'ADMIN.Societe' | translate }} </div>
+
+                  <div class="profile-info-value">
+
+                    <span>
+                      {{accesModif.societe}}
+                    </span>
+
+
+                  </div>
+                </div>
+
+                <div class="profile-info-row" >
+                  <div class="profile-info-name"> {{ 'ADMIN.Nom' | translate }} </div>
+
+                  <div class="profile-info-value">
+
+                    <span>
+                      {{accesModif.nom}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="profile-info-row" >
+                  <div class="profile-info-name"> {{ 'ADMIN.Prenom' | translate }} </div>
+
+                  <div class="profile-info-value">
+
+
+                     <span>
+                      {{accesModif.prenom}}
+                    </span>
+
+                  </div>
+                </div>
+
+                <div class="profile-info-row" *ngIf="accesModif.type!='Permanent'">
+                  <div class="profile-info-name">{{ 'ADMIN.Emplacement' | translate }} </div>
+
+                  <div class="profile-info-value">
+                     <span>
+                      {{accesModif.emplacement.name}}
+                    </span>
+
+                  </div>
+                </div>
+
+                <div class="profile-info-row" *ngIf="accesModif.type!='Permanent'">
+                  <div class="profile-info-name"> {{ 'ADMIN.Personne visitée' | translate }} </div>
+
+                  <div class="profile-info-value">
+
+                    <span>
+                      {{accesModif.personneVisite}}
+                    </span>
+
+                  </div>
+                </div>
+
+                <div class="profile-info-row" *ngIf="accesModif.type=='Permanent'">
+                  <div class="profile-info-name"> Permanent </div>
+
+                  <div class="profile-info-value">
+                     <span>
+                      {{accesModif.personneVisite}}
+                    </span>
+
+
+                </div>
+
+
+
+              </div>
+
+
+              </div>
+
+            </div>
+            <div class="col-md-6">
+
+
+              <div class="profile-user-info profile-user-info-striped">
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name"> {{ 'ADMIN.numBadge' | translate }} </div>
+
+                  <div class="profile-info-value">
+                    <span>
+                      {{accesModif.numBadge}}
+                    </span>
+
+
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name"> {{ 'ADMIN.PermisFeu' | translate }} </div>
+
+                  <div class="profile-info-value">
+
+                    <span>
+                      {{accesModif.permisFeu}}
+                    </span>
+
+
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name"> {{ 'ADMIN.numPF' | translate }} </div>
+
+                  <div class="profile-info-value">
+
+                     <span>
+                      {{accesModif.numPF}}
+                    </span>
+
+
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name"> {{ 'ADMIN.Motif' | translate }} </div>
+
+                  <div class="profile-info-value">
+
+
+                    <span>
+                      {{accesModif.motif}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="profile-info-row">
+                  <div class="profile-info-name">{{ 'ADMIN.notifComplement' | translate }} </div>
+
+                  <div class="profile-info-value">
+                     <p>
+                      {{accesModif.notifComplement}}
+                    </p>
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+            </div>
+
+          </div>
+
+
+          <div class="col-xs-12">
+            <div class="col-xs-12">
+              <div class="card">
+                <div class="card-header">
+                  <strong>Reservation Materiel </strong>
+
+
+                  <div class="card-actions">
+                    <button aria-controls="collapseExample" aria-expanded="false" class="btn-minimize" data-target="" data-toggle="collapse" type="button" (click)="openresMatEdit();">
+                      <i class="icon-arrow-up" *ngIf="isopenMatEdit"></i>
+                      <i class="icon-arrow-down" *ngIf="!isopenMatEdit"></i>
+                    </button>
+
+                  </div>
+                </div>
+                <div class="card-block" *ngIf="isopenMatEdit">
+                  <div class="center">
+                    <h3 class="blue lighter">Sélectionner matériel </h3>
+
+                    <div class="row" *ngIf="isListeMateriellesEdit">
+                      <div class="col-md-12">
+
+                        <div class='table-responsive'>
+                          <table  id="example2"  class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                              <th class="text-center"><i class="icon-people"></i></th>
+                              <th>{{ 'ADMIN.Nom' | translate }}</th>
+                              <th>{{ 'ADMIN.Code' | translate }}</th>
+                              <th>{{ 'ADMIN.Action' | translate }}</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                              <th></th>
+
+                              <th>{{ 'ADMIN.Nom' | translate }}</th>
+                              <th>{{ 'ADMIN.Code' | translate }}</th>
+                              <th></th>
+
+
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr  *ngFor='let matrielle of materielles; let i = index' >
+                              <td class="text-center">
+                                <div class="avatar">
+                                  <img src="/assets/public/materielle/{{matrielle.photo}}" class="img-avatar"  *ngIf="matrielle.photo">
+                                  <img src="/assets/public/materielle/materielle.jpg" class="img-avatar"   *ngIf="!matrielle.photo">
+                                  <span class="avatar-status badge-success"></span>
+                                </div>
+                              </td>
+
+
+                              <td>{{ matrielle.name}}</td>
+                              <td>
+                                <div class="">
+                                  <a target="_blank" href="/assets/public/codeBar/{{matrielle.photoCodeBar}}" *ngIf="matrielle.photoCodeBar64">
+                                    <img src="/assets/public/codeBar/{{matrielle.photoCodeBar}}" class="" alt="{{ matrielle.codeBar}}" >
+                                  </a>
+                                  <span style="visibility: hidden;font-size: 0px;">{{matrielle.codeBar}}</span>
+
+                                  <span class="avatar-status badge-success"></span>
+                                </div>
+
+                              </td>
+                              <td>
+
+
+
+
+                                <input  type="checkbox" #{{matrielle._id}}   #cvm
+                                     (change)="checkboxmatEdit(matrielle,accesModif,cvm.checked,i)" *ngIf="!in_array(matrielle._id,historiqueAccesMatModif)">
+
+
+                                <input  type="checkbox" #{{matrielle._id}}   #cvm
+                                        checked
+                                        (change)="checkboxmatEdit(matrielle,accesModif,cvm.checked,i)" *ngIf="in_array(matrielle._id,historiqueAccesMatModif)">
+
+
+
+                              </td>
+                            </tr>
+
+                            </tbody>
+                          </table>
+                        </div>
+
+
+
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-xs-12">
+            <div class="col-xs-12">
+              <div class="card">
+                <div class="card-header">
+                  <strong>Selection cle </strong>
+                  <div class="card-actions">
+
+                    <button aria-controls="collapseExample" aria-expanded="false" class="btn-minimize" data-target="" data-toggle="collapse" type="button" (click)=" openrescleEdit();">
+                      <i class="icon-arrow-up" *ngIf="isopenCleEdit"></i>
+                      <i class="icon-arrow-down" *ngIf="!isopenCleEdit"></i>
+                    </button>
+
+                  </div>
+                </div>
+                <div class="card-block"  *ngIf="isopenCleEdit">
+                  <div class="center">
+                    <h3 class="blue lighter">Choisir des clés </h3>
+
+                    <div class="row" *ngIf="isListeClesEdit">
+                      <div class="col-md-12">
+
+                        <div class='table-responsive'>
+                          <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+
+
+                              <th>{{ 'ADMIN.Nom' | translate }}</th>
+                              <th>{{ 'ADMIN.Code' | translate }}</th>
+                              <th>{{ 'ADMIN.Action' | translate }}</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+
+                              <th>{{ 'ADMIN.Nom' | translate }}</th>
+                              <th>{{ 'ADMIN.Code' | translate }}</th>
+                              <th>{{ 'ADMIN.Action' | translate }}</th>
+
+
+
+                            </tr>
+                            </tfoot>
+
+                            <tbody>
+                            <tr  *ngFor='let cle of cles; let i = index' >
+
+
+
+                              <td>{{ cle.name}}</td>
+                              <td>
+                                <div class="">
+                                  <a target="_blank" href="/assets/public/codeBar/{{cle.photoCodeBar}}" *ngIf="cle.photoCodeBar64">
+                                    <img src="/assets/public/codeBar/{{cle.photoCodeBar}}" class="" alt="{{ cle.codeBar}}" >
+                                  </a>
+                                  <span style="visibility: hidden;font-size: 0px;">{{cle.codeBar}}</span>
+
+                                  <span class="avatar-status badge-success"></span>
+                                </div>
+
+                              </td>
+                              <td>
+
+
+                                <input  type="checkbox" #{{cle._id}}    #cvm
+                                        (change)="checkboxCleEdit(cle,accesModif,cvm.checked,i)" *ngIf="!in_array(cle._id,historiqueAccesCleModif)">
+
+
+                                <input  type="checkbox" #{{cle._id}}    #cvm
+                                        checked
+                                        (change)="checkboxCleEdit(cle,accesModif,cvm.checked,i)" *ngIf="in_array(cle._id,historiqueAccesCleModif)">
+
+
+                              </td>
+                            </tr>
+
+                            </tbody>
+                          </table>
+                        </div>
+
+
+
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+      </div>
+
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModalInfoAcces.close()">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+
+<modal #myModalInfoMatrielles modalClass="modal-lg" >
+  <modal-header>
+  </modal-header>
+  <modal-content>
+
+    <div class="center">
+
+      <div class='table-responsive'>
+        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+          <thead>
+          <tr>
+
+            <th class="text-center"><i class="icon-people"></i></th>
+
+            <th>{{ 'ADMIN.Nom' | translate }}</th>
+            <th>{{ 'ADMIN.Code' | translate }}</th>
+            <th><i class="ace-icon fa fa-clock-o bigger-110"></i>{{ 'ADMIN.Date' | translate }}</th>
+            <th>{{ 'ADMIN.res' | translate }}</th>
+
+            <th>{{ 'ADMIN.Etat' | translate }}</th>
+
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr  *ngFor='let matrielle of materiellesAcces' >
+            <td class="text-center">
+              <div class="avatar" *ngIf="matrielle.type=='Materielle'">
+                <img src="/assets/public/materielle/{{matrielle.objetType.photo}}" class="img-avatar"  *ngIf="matrielle.objetType.photo!=null">
+                <img src="/assets/public/materielle/materielle.jpg" class="img-avatar"   *ngIf="!matrielle.objetType.photo">
+                <span class="avatar-status badge-success"></span>
+              </div>
+              <div class="avatar" *ngIf="matrielle.type=='Cle'">
+                <img src="/assets/public/materielle/cle.png" class="img-avatar" >
+                <span class="avatar-status badge-success"></span>
+              </div>
+            </td>
+
+
+            <td>{{ matrielle.objetType.name}}</td>
+            <td>
+              <div class="">
+                <a target="_blank" href="/assets/public/codeBar/{{matrielle.objetType.photoCodeBar}}" *ngIf="matrielle.objetType.photoCodeBar64">
+                  <img src="/assets/public/codeBar/{{matrielle.objetType.photoCodeBar}}" class="" alt="{{ matrielle.codeBar}}" >
+                </a>
+                <span style="visibility: hidden;font-size: 0px;">{{matrielle.objetType.codeBar}}</span>
+
+                <span class="avatar-status badge-success"></span>
+              </div>
+
+            </td>
+            <td>{{ matrielle.objetType.dateCreation}}</td>
+
+            <td>{{ matrielle.typeAcces}}: {{ matrielle.acces.nom}} {{ matrielle.acces.prenom}}</td>
+            <td>
+              <span *ngIf="matrielle.etat=='Out'" class="label label-sm label-success">{{ 'ADMIN.Actif' | translate }}</span>
+              <span  *ngIf="matrielle.etat=='In'" class="label label-sm label-warning">{{ 'ADMIN.Reserver' | translate }}</span>
+
+
+            </td>
+
+
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModalInfoMatrielles.close()">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+
+
+
+
+
+

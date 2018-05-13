@@ -1,0 +1,288 @@
+<header class="app-header navbar">
+  <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>
+
+<div *ngIf="user.site.isPrive" >
+  <a class="navbar-brand" style="background-image: url();" >
+    <img src="/assets/public/site/{{user.site.logo}}" style="width: 67px;height: 47px;" *ngIf="user.site.logo" />
+    <img src="/assets/public/site/LogoSite.png" style="width: 67px;height: 47px;" *ngIf="!user.site.logo" />
+  </a>
+</div>
+
+  <div *ngIf="!user.site.isPrive">
+    <a class="navbar-brand"></a>
+  </div>
+
+  <ul class="nav navbar-nav hidden-md-down">
+    <li class="nav-item">
+      <a class="nav-link navbar-toggler sidebar-toggler">&#9776;</a>
+    </li>
+
+  </ul>
+
+
+
+  <ul class="nav navbar-nav ml-auto">
+
+
+    <li class="nav-item dropdown" ngbDropdown>
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+        <i class="icon-bell"  style="font-size:26px;"></i>
+        <span class="badge badge-pill badge-danger">{{nbrAlertNonLue}}</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown" style="left: auto;right: 0px;">
+
+        <div *ngFor="let alert of listeAlertNonLue ">
+
+          <a class="dropdown-item" *ngIf="alert.type=='Consigne'" (click)="openedInfoConsigne(alert);myModal2.open();">
+
+
+              <i class="ace-icon fa fa-info-circle" style="background: #1b249f;color: white;padding: 10px 28px 10px 13px; font-size: 20px"></i>
+              <span class="pull-right text-muted small" style="margin-top: -5px;"><em>{{ alert.dateCreation | date:'dd-MM-yyyy'}}</em></span>
+              <span class="word-wrap: break-word;">{{alert.objets.remarque.slice( 0, 50 )}} ... </span>
+
+
+
+
+          </a>
+
+          <a class="dropdown-item" *ngIf="alert.type=='Procedure'" (click)="openedInfoProcedure(alert);myModal.open();">
+
+
+              <i class="ace-icon fa fa-check-square-o" style="background: #4e6b11;color: white;padding: 10px 28px 10px 13px; font-size: 20px"></i>
+              <span class="pull-right text-muted small" style="margin-top: -5px;"><em>{{ alert.dateCreation | date:'dd-MM-yyyy'}}</em></span>
+              <span class="word-wrap: break-word;">{{alert.objets.remarque.slice( 0, 50 )}} ... </span>
+
+
+          </a>
+
+
+
+
+        </div>
+
+
+
+      </div>
+    </li>
+
+
+
+
+
+    <li class="nav-item hidden-md-down">
+      <a class="nav-link" routerLink="/chef/messages">
+        <i class=" icon-envelope" style="font-size: 26px"></i><span class="badge badge-pill badge-danger">{{mailNonLue}}</span></a>
+    </li>
+
+    <li class="nav-item dropdown" ngbDropdown>
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+        <img src="/assets/public/avatar/{{user.photo}}" class="img-avatar" alt="{{user.mail}}" *ngIf="user.photo">
+        <span class="hidden-md-down" *ngIf="user.typeAgent==='Agent'">
+
+            Agent
+
+        </span>
+
+        <span class="hidden-md-down" *ngIf="user.typeAgent!='Agent'">
+
+         Chef poste
+
+        </span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown">
+
+
+        <a class="dropdown-item" >
+          <img *ngIf='lg =="fr"'
+               src="/assets/public/images/login/i18n/en.png"
+               title="EN"
+               style="width: 69px;"
+
+               (click)="onChangeLg('en')" >
+          <img *ngIf='lg =="en"'
+               src="/assets/public/images/login/i18n/fr.png"
+               title="FR"
+               style="width: 69px;"
+               (click)="onChangeLg('fr')"
+          >
+        </a>
+        <a class="dropdown-item" routerLink="/chef/profil"><i class="fa fa-user"></i>{{ 'ADMIN.Profile' | translate }} </a>
+        <a class="dropdown-item" (click)=" onLogout()" ><i class="fa fa-lock"></i> {{ 'ADMIN.Logout' | translate }}</a>
+      </div>
+    </li>
+
+  </ul>
+
+
+
+
+</header>
+<modal #myModal modalClass="modal-lg" >
+  <modal-header>
+    <h1>Alerte - Procedure </h1>
+  </modal-header>
+  <modal-content>
+
+
+
+    <div class="form-group row" *ngIf="openedInfo">
+      <div class="col-md-6" >
+        <div class="profile-user-info profile-user-info-striped">
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.Nom' | translate }}  </div>
+
+            <div class="profile-info-value">
+              <span>{{procedureInfo.nom}}</span>
+
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.Lien' | translate }}  </div>
+
+            <div class="profile-info-value">
+
+              <span>{{procedureInfo.lien}}</span>
+
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.pièce jointe' | translate }}  </div>
+
+            <div class="profile-info-value">
+
+              <div class="row">
+                <div  *ngFor="let Jointe of procedureInfo.pieceJointe" class="col-md-2 col-sm-4">
+                  <div class="card">
+                    <div *ngIf="Jointe.slice( 19, 23 )=='jpg'||Jointe.slice( 19, 23 )=='png'||Jointe.slice( 19, 24 )=='jpeg'||Jointe.slice( 19, 23 )=='gif'" >
+                      <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                        <img  src="/assets/public/procedure/icone/image.png" style="width: 100%;" />
+                      </a>
+                    </div>
+                    <div *ngIf="Jointe.slice( 19, 23 )=='pdf'">
+                      <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                        <img  src="/assets/public/procedure/icone/pdf.png" style="width: 100%;"/>
+                      </a>
+                    </div>
+                    <div *ngIf="Jointe.slice( 19, 23 )=='doc'||Jointe.slice( 19, 24 )=='docx'">
+                      <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                        <img  src="/assets/public/procedure/icone/word.png" style="width: 100%;" />
+                      </a>
+                    </div>
+                    <div *ngIf="Jointe.slice( 19, 23 )=='zip'||Jointe.slice( 19, 23 )=='rar'||Jointe.slice( 19, 24 )=='7zip'||Jointe.slice( 19, 22 )=='tg'">
+                      <a href="/assets/public/procedure/{{Jointe}}" Target="_blank">
+                        <img  src="/assets/public/procedure/icone/zip.jpg" style="width: 100%;" />
+                      </a>
+                    </div>
+
+
+                  </div>
+
+                </div>
+              </div>
+
+
+
+
+
+
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-6" >
+        <div class="profile-user-info profile-user-info-striped">
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.Remarque' | translate }}  </div>
+
+            <div class="profile-info-value">
+
+              <p>{{procedureInfo.remarque}}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModal.close()">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+
+<modal #myModal2 modalClass="modal-lg" >
+  <modal-header>
+    <h1>Alerte - Consigne </h1>
+  </modal-header>
+  <modal-content>
+
+
+
+    <div class="form-group row" *ngIf="openedConsigneInfo">
+      <div class="col-md-6" >
+        <div class="profile-user-info profile-user-info-striped">
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> {{ 'ADMIN.Type' | translate }}  </div>
+
+            <div class="profile-info-value">
+              <span>{{consigneInfo.type}}</span>
+
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> Consignes  </div>
+
+            <div class="profile-info-value">
+
+              <p>{{consigneInfo.remarque}}</p>
+            </div>
+          </div>
+
+
+
+        </div>
+
+      </div>
+      <div class="col-md-6" >
+        <div class="profile-user-info profile-user-info-striped">
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> Date début  </div>
+
+            <div class="profile-info-value">
+
+              <span>{{consigneInfo.dateDebut | date:'dd-MM-yyyy'}}</span>
+
+            </div>
+          </div>
+
+          <div class="profile-info-row">
+            <div class="profile-info-name"> Date fin  </div>
+
+            <div class="profile-info-value">
+
+              <p>{{consigneInfo.dateFin | date:'dd-MM-yyyy'}}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModal2.close()">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>

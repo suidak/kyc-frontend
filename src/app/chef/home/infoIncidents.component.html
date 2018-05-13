@@ -1,0 +1,1143 @@
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header" style="border: 1px solid #7a0627;padding: 0;">
+        <i class="fa fa-exclamation-triangle " style="background: #7a0627;color: white;padding: 0.75rem 1.25rem; font-size: 20px"></i>
+        {{ 'ADMIN.Incidents sur site' | translate }}
+        <div style="float: right; transform: translateX(-10px)translateY(5px);">
+          <button type="button" class="btn btn-success btn-sm" (click)="actionAdd();myModal.open()" > {{ 'ADMIN.Ajouter' | translate }} <i class="icon-plus icons"></i></button>
+        </div>
+      </div>
+
+      <div class="row card-block">
+
+<div *ngFor="let inci of tabIncidents">
+  <div class="col-xs-3 col-lg" *ngIf="inci.value>0" >
+    <div class="card" style="min-width: 113px;">
+      <div class="card-block p-a-1 clearfix" style="padding: 1px 1px 1px 1px;" (click)="getActiviteIncidentsByType(inci.name);myModalInfo.open();">
+        <div *ngIf="inci.icon" style="float: left;">
+          <img  *ngIf="inci.value>0"  src="{{baseUrl}}/assets/public/icons/{{inci.icon}}" style="width: 67px;"  />
+        </div>
+
+        <div *ngIf="inci.icon" style="float: left;">
+          <img  *ngIf="inci.icon>0"  src="{{baseUrl}}/assets/public/icons/{{inci.icon}}" style="width: 67px;"  />
+        </div>
+
+
+        <div *ngIf="inci.value==0" class="h5 text-info m-b-0 m-t-h"> {{inci.value}}</div>
+        <div  *ngIf="inci.value>0" class="h5 text-danger m-b-0 m-t-h" style="font-size: 29px;margin: 21px 0px 18px 76px;"> {{inci.value}}</div>
+        <div class="text-muted text-uppercase font-weight-bold font-xs" style="font-size: 18px;">{{inci.name}}</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<modal #myModal modalClass="modal-lg" >
+  <modal-header>
+    <h1>{{ 'ADMIN.Incident' | translate }}</h1>
+  </modal-header>
+  <modal-content>
+
+    <div *ngIf="alertsDanger" class="alert alert-danger" role="alert">
+      <strong> {{ alertsDangerMsg }}!</strong>
+    </div>
+
+    <form  [formGroup]="addIncidentForm" (ngSubmit)="addIncident()" *ngIf="!alertsSuccess">
+
+      <div class="form-group row">
+        <div class="col-md-3" >
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Incident' | translate }} </div>
+
+              <div class="profile-info-value">
+                <select class="form-control "  formControlName="type" (ngModelChange)="appelMethode($event);">
+                  <option *ngFor="let x of listeTypeIncident" [value]="x">{{x}}</option>
+                </select>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3" *ngIf="listeSousIncidents.length>0">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Type' | translate }} </div>
+
+              <div class="profile-info-value">
+                <select class="form-control "  formControlName="souincident">
+                  <option *ngFor="let souIncid of listeSousIncidents" [ngValue]="souIncid">{{souIncid}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3" >
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name"> {{ 'ADMIN.Date' | translate }} </div>
+
+              <div class="profile-info-value">
+
+                <input class="form-control" type="date"
+                       [ngModel]="datexxxxx | date:'yyyy-MM-dd'"
+                        max="{{datexxxxx | date:'yyyy-MM-dd'}}"
+                       formControlName="date" placeholder="date" id="example-date-input" >
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3" >
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name"> {{ 'ADMIN.Heure' | translate }} </div>
+
+              <div class="profile-info-value">
+                <input class="form-control" type="time"
+                       max="{{datexxxxx | date:'HH:mm'}}"
+                       [ngModel]="datexxxxx | date:'shortTime'" formControlName="heure"   >
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6" *ngIf="listeActionIncidents.length>0">
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row" >
+              <div class="profile-info-name">{{ 'ADMIN.Action' | translate }}</div>
+
+              <div style="margin: 5px;" *ngFor="let action of listeActionIncidents ; let i = index">
+                <label style="width: 100%;" >
+                  <input #{{action}}   #cvm [checked]=false type="checkbox" (change)="checkboxActions(action,cvm.checked,i)">
+                  {{action}}
+                </label>
+              </div>
+            </div>
+
+
+
+          </div>
+
+
+
+
+        </div>
+
+        <div class="col-md-6">
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Emplacement' | translate }} </div>
+
+              <div class="profile-info-value">
+                <select class="form-control "  formControlName="emplacement" (ngModelChange)="appelMethodeSousZone($event);">
+                  <option *ngFor="let z of zones" [ngValue]="z">{{z.name}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="profile-info-row" *ngIf="listeSousZone.length>0">
+              <div class="profile-info-name">{{ 'ADMIN.Batiment et espace externe' | translate }}</div>
+
+              <div class="profile-info-value">
+                <select class="form-control "  formControlName="lieu">
+                  <option *ngFor="let sz of listeSousZone" [ngValue]="sz">{{sz}}</option>
+                </select>
+
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>
+      <hr>
+      <div class="row">
+
+        <div class="col-md-6" *ngIf="incidentSelect && incidentSelect.victimes==='true'&&incidentSelect.auteurs==='true'&& incidentSelect.temoins==='true'">
+          <h2>{{ 'ADMIN.Victimes' | translate }} / Témoins</h2>
+          <tabset #staticTabs>
+            <tab heading="Victimes" *ngIf="incidentSelect.victimes==='true'">
+              <div *ngIf="islisteVictim">
+                <div class="profile-user-info profile-user-info-striped" *ngFor='let victim of listeVictim'>
+
+                  <div class="profile-info-row">
+                    <div class="profile-info-name">{{ 'ADMIN.Nom' | translate }} </div>
+
+                    <div class="profile-info-value">
+                      <span class="form-control" >{{victim.nomVictimes}}</span>
+
+
+                    </div>
+                  </div>
+                  <div class="profile-info-row">
+                    <div class="profile-info-name">{{ 'ADMIN.Tel' | translate }} </div>
+
+                    <div class="profile-info-value">
+                      <span class="form-control" >{{victim.telVictimes}}</span>
+
+
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+
+              </div>
+
+              <form  [formGroup]="addvictimesForm" (ngSubmit)="addVictimes()" >
+
+                <div class="profile-user-info profile-user-info-striped">
+
+                  <div class="profile-info-row">
+                    <div class="profile-info-name">{{ 'ADMIN.Nom' | translate }} </div>
+
+                    <div class="profile-info-value">
+                      <input class="form-control" type="text"  formControlName="nomVictimes" style="float: left;width: 80%;"  >
+
+
+                    </div>
+                  </div>
+
+
+                  <div class="profile-info-row">
+                    <div class="profile-info-name">{{ 'ADMIN.Tel' | translate }} </div>
+
+                    <div class="profile-info-value">
+                      <input class="form-control" type="text"  formControlName="telVictimes" style="float: left;width: 80%;" >
+                      <button class="btn btn-success" style="float: right;" type="submit" [disabled]="!addvictimesForm.valid"><i class="fa fa-floppy-o"></i>
+                      </button>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </form>
+
+
+            </tab>
+            <tab heading="Auteurs" *ngIf="incidentSelect.auteurs==='true'">
+              <div *ngIf="islisteAuteurs">
+                <div class="profile-user-info profile-user-info-striped" *ngFor='let auteur of listeAuteurs'>
+
+                  <div class="profile-info-row">
+                    <div class="profile-info-name">{{ 'ADMIN.Nom' | translate }} </div>
+
+                    <div class="profile-info-value">
+                      <span class="form-control" >{{auteur.nomAuteurs}}</span>
+
+
+                    </div>
+                  </div>
+
+                  <div class="profile-info-row">
+                    <div class="profile-info-name">{{ 'ADMIN.Tel' | translate }} </div>
+
+                    <div class="profile-info-value">
+                      <span class="form-control" >{{auteur.telAuteurs}}</span>
+
+
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+
+              </div>
+              <form  [formGroup]="addauteursForm" (ngSubmit)="addAuteurs()" >
+
+                <div class="profile-user-info profile-user-info-striped">
+
+
+                  <div class="profile-info-row">
+                    <div class="profile-info-name">{{ 'ADMIN.Nom' | translate }} </div>
+
+                    <div class="profile-info-value">
+                      <input class="form-control" type="text"  formControlName="nomAuteurs" style="float: left;width: 80%;"  >
+
+
+                    </div>
+                  </div>
+
+                  <div class="profile-info-row">
+                    <div class="profile-info-name">{{ 'ADMIN.Tel' | translate }} </div>
+
+                    <div class="profile-info-value">
+
+
+                      <input class="form-control" type="text"  formControlName="telAuteurs"  style="float: left;width: 80%;" >
+                      <button class="btn btn-success" style="float: right;" type="submit" [disabled]="!addauteursForm.valid"><i class="fa fa-floppy-o"></i>
+                      </button>
+
+
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+
+              </form>
+            </tab>
+            <tab heading="Témoins" *ngIf="incidentSelect.temoins==='true'">
+              <form  [formGroup]="addtemoinsForm" (ngSubmit)="addTemoins()" >
+
+                <div *ngIf="islisteTemoins">
+                  <div class="profile-user-info profile-user-info-striped" *ngFor='let temoin of listeTemoins'>
+
+                    <div class="profile-info-row">
+                      <div class="profile-info-name">{{ 'ADMIN.Nom' | translate }} </div>
+
+                      <div class="profile-info-value">
+                        <span class="form-control" >{{temoin.nomTemoins}}</span>
+
+
+                      </div>
+                    </div>
+                    <div class="profile-info-row">
+                      <div class="profile-info-name">{{ 'ADMIN.Tel' | translate }} </div>
+
+                      <div class="profile-info-value">
+                        <span class="form-control" >{{temoin.telTemoins}}</span>
+
+
+                      </div>
+                    </div>
+
+
+
+                  </div>
+
+
+                </div>
+
+                <div class="profile-user-info profile-user-info-striped">
+
+                  <div class="profile-info-row">
+                    <div class="profile-info-name">{{ 'ADMIN.Nom' | translate }} </div>
+
+                    <div class="profile-info-value">
+                      <input class="form-control" type="text"  formControlName="nomTemoins" style="float: left;width: 80%;"  >
+
+
+                    </div>
+                  </div>
+
+                  <div class="profile-info-row">
+                    <div class="profile-info-name">{{ 'ADMIN.Tel' | translate }} </div>
+
+                    <div class="profile-info-value">
+
+
+                      <input class="form-control" type="text"  formControlName="telTemoins"  style="float: left;width: 80%;" >
+                      <button class="btn btn-success" style="float: right;" type="submit" [disabled]="!addtemoinsForm.valid"><i class="fa fa-floppy-o"></i>
+                      </button>
+
+
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+
+              </form>
+            </tab>
+          </tabset>
+
+        </div>
+
+        <div class="col-md-6" >
+          <h2>{{ 'ADMIN.Fichiers' | translate }} / {{ 'ADMIN.Photos' | translate }}</h2>
+          <tabset #staticTabs>
+            <tab heading="Photos">
+              <div class="form-group">
+            <span class="profile-picture" style="min-width: 97px; min-height: 83px;width: 100%;height: auto;">
+                     <div class="ace-file-input ace-file-multiple" ngFileDrop
+                          [options]="options"
+                          (onUpload)="handleUpload($event)"
+                          [ngClass]="{'file-over': hasBaseDropZoneOver}"
+                          (onFileOver)="fileOverBase($event)" >
+
+                    <input type="file"
+                           ngFileSelect
+                           [options]="options"
+                           (onUpload)="handleUpload($event)"
+                           (beforeUpload)="beforeUpload($event)" multiple
+                           style="width: 100%;height: 100px;z-index: 0;" />
+                    <span class="ace-file-container" data-title="Drop files here or click to choose" *ngIf="!fileIsUpload">
+                      <span class="ace-file-name" data-title="No File ...">
+                        <i class=" ace-icon ace-icon fa fa-cloud-upload"></i>
+                      </span>
+                    </span>
+                       <div class="row card-block" style="margin-top: -15px;" *ngIf="fileIsUpload">
+
+                         <div class="col-xs-3 col-lg"  *ngFor='let fileImg of listefileImageUploade; let i = index' >
+                           <button  style="float: left;" (click)="supImage(i);">
+                             <i class="fa fa-times" aria-hidden="true"></i>
+                           </button>
+                            <img  src="/assets/public/incidents/{{fileImg}}" style="width: 104px;height: 69px;" />
+                          </div>
+
+
+                       </div>
+
+                       <img src="/assets/public/avatar/uploadess.png" style="width: 100%;height: 75px;"  *ngIf="!fileIsUpload" />
+
+
+
+                  </div>
+                  </span>
+              </div>
+
+            </tab>
+
+          </tabset>
+
+
+
+
+
+        </div>
+
+      </div>
+
+
+      <div class="row" *ngIf="incidentSelect">
+
+
+
+        <div class="col-md-3" *ngIf="incidentSelect.intervention">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Intervention' | translate }} Police </div>
+              <div class="profile-info-value">
+
+                <input #CheckedPolice [checked]=false  formControlName="interventionP" type="checkbox" (change)="checkboxInterventionPolice(CheckedPolice.checked)" >
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="incidentSelect.intervention">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Heure arrivé' | translate }}</div>
+
+              <div class="profile-info-value">
+                <input class="form-control" type="time" #heurAriveP formControlName="heureArriveInterventionP" [readonly]="!isCheckedPolice"
+                       pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" >
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="incidentSelect.intervention">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Heure départ' | translate }}</div>
+
+              <div class="profile-info-value">
+
+                <input class="form-control " type="time" formControlName="heureDepartInterventionP" [readonly]="!isCheckedPolice"
+                       pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}" >
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="incidentSelect.intervention">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name"> N° PV </div>
+
+              <div class="profile-info-value">
+
+                <input class="form-control" type="text"  formControlName="numPVP" [readonly]="!isCheckedPolice" >
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="col-md-3" *ngIf="incidentSelect.intervention">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Intervention' | translate }} Secours </div>
+              <div class="profile-info-value">
+
+                <input #CheckedSecours [checked]=false  formControlName="interventionS" type="checkbox" (change)="checkboxInterventionSecours(CheckedSecours.checked)" >
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="incidentSelect.intervention">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Heure arrivé' | translate }}</div>
+
+              <div class="profile-info-value">
+                <input class="form-control" type="time"  formControlName="heureArriveInterventionS" [readonly]="!isCheckedSecours"  >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="incidentSelect.intervention">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Heure départ' | translate }}</div>
+
+              <div class="profile-info-value">
+                <input class="form-control " type="time"  formControlName="heureDepartInterventionS" [readonly]="!isCheckedSecours" >
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="incidentSelect.intervention">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name"> N° PV </div>
+
+              <div class="profile-info-value">
+
+                <input class="form-control" type="text"  formControlName="numPVS" [readonly]="!isCheckedSecours" >
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="col-md-12" *ngIf="incidentSelect.intervention">
+
+
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Observation Intervention' | translate }} </div>
+
+              <div class="profile-info-value">
+                <textarea class="form-control" id="form-field-8" formControlName="observation"  style=" height: 85px;"></textarea>
+              </div>
+            </div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+      </div>
+
+      <div class="row" *ngIf="incidentSelect">
+
+        <div class="col-md-6" *ngIf="incidentSelect.descriptifsFaits">
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Descriptifs des faits' | translate }}  </div>
+
+              <div class="profile-info-value">
+                <textarea class="form-control" id="form-field-8" formControlName="descriptifs"  style=" height: 85px;"></textarea>
+              </div>
+            </div>
+
+
+          </div>
+
+          <!-- /section:pages/profile.info -->
+
+
+        </div>
+        <div class="col-md-6" *ngIf="incidentSelect.complementInfo">
+
+
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Complément d’info / Adresses' | translate }} </div>
+
+              <div class="profile-info-value">
+                <textarea class="form-control" id="form-field-8" formControlName="complementInfo"  style=" height: 85px;"></textarea>
+              </div>
+            </div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+      </div>
+
+      <hr>
+
+
+      <div class="col-12" style="text-align: right;">
+        <button class="btn btn-primary" type="submit" [disabled]="!addIncidentForm.valid"><i class="fa fa-floppy-o"></i>
+          {{ 'ADMIN.Enregistrer' | translate }}
+        </button>
+
+      </div>
+
+
+    </form>
+
+    <div class="" *ngIf="alertsSuccess">
+      <div class="alert alert-success">
+        <strong>{{alertsSuccessMsg}}</strong>
+      </div>
+    </div>
+    <div  *ngIf="alertsSuccess">
+
+      <div class="form-group row">
+        <div class="col-md-3" >
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Incident' | translate }} </div>
+
+              <div class="profile-info-value">
+               <span>
+                 {{newIncident.type}}
+               </span>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3" *ngIf="newIncident.souincident">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Type' | translate }} </div>
+
+              <div class="profile-info-value">
+
+                <span >
+                 {{newIncident.souincident}}
+               </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" >
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name"> {{ 'ADMIN.Date' | translate }} </div>
+
+              <div class="profile-info-value">
+                <span>
+                 {{newIncident.date.slice( 0, 10 )}}
+               </span>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3" >
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name"> {{ 'ADMIN.Heure' | translate }} </div>
+
+              <div class="profile-info-value">
+
+                <span>
+                 {{newIncident.heure}}
+               </span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-6" *ngIf="newIncident.actions">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row" >
+              <div class="profile-info-name">{{ 'ADMIN.Action' | translate }}</div>
+              <div style="margin: 5px;" *ngFor="let action of newIncident.actions ; let i = index">
+                <label style="width: 100%;" >
+                  {{action}}
+                </label>
+              </div>
+            </div>
+
+
+
+          </div>
+
+
+
+
+        </div>
+
+
+        <div class="col-md-6" >
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Emplacement' | translate }} </div>
+
+              <div class="profile-info-value">
+
+                <span *ngIf="newIncident.emplacement">
+                 {{newIncident.emplacement.name}}
+               </span>
+
+
+              </div>
+            </div>
+
+            <div class="profile-info-row" *ngIf="newIncident.lieu">
+              <div class="profile-info-name">{{ 'ADMIN.Batiment et espace externe' | translate }}</div>
+
+              <div class="profile-info-value">
+                <span>
+                 {{newIncident.lieu}}
+               </span>
+
+
+              </div>
+            </div>
+
+
+
+
+          </div>
+
+          <!-- /section:pages/profile.info -->
+
+
+        </div>
+
+
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6" >
+          <h2>Contacts</h2>
+
+          <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+
+              <th>{{ 'ADMIN.Victimes' | translate }}</th>
+              <th>{{ 'ADMIN.Auteurs' | translate }}</th>
+              <th>Témoins</th>
+
+
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+              <td>
+                <div *ngFor='let victime of newIncident.victimes'>
+                  <span> {{victime.nomVictimes}} {{victime.telVictimes}}</span>
+                </div>
+
+              </td>
+              <td>
+                <div *ngFor='let auteur of newIncident.auteurs'>
+                  <span> {{auteur.nomAuteurs}} {{auteur.telAuteurs}}</span>
+                </div>
+
+              </td>
+              <td>
+                <div *ngFor='let temoin of newIncident.temoins'>
+                  <span> {{temoin.nomTemoins}} {{temoin.telTemoins}}</span>
+                </div>
+              </td>
+            </tr>
+
+
+            </tbody>
+          </table>
+
+
+
+        </div>
+        <div class="col-md-6" >
+          <h2>{{ 'ADMIN.Fichiers' | translate }} / {{ 'ADMIN.Photos' | translate }}</h2>
+
+          <div class="row card-block">
+
+            <div class="col-xs-6 col-lg" *ngFor='let photo of newIncident.photos'>
+              <img src="/assets/public/incidents/{{photo}}" style="width: 90%;" >
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <hr>
+
+      <div class="row">
+
+
+
+        <div class="col-md-3" *ngIf="newIncident.interventionP" >
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Intervention' | translate }} Police </div>
+
+              <div class="profile-info-value">
+
+                <span>
+                  {{newIncident.interventionP}}
+                </span>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="newIncident.interventionP">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">Heure arrivée </div>
+
+              <div class="profile-info-value">
+
+                <span>
+                  {{newIncident.heureArriveInterventionP}}
+                </span>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="newIncident.interventionP">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">Heure départ</div>
+
+              <div class="profile-info-value">
+
+                <span>
+                  {{newIncident.heureDepartInterventionP}}
+                </span>
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="newIncident.interventionP">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name"> N° PV </div>
+
+              <div class="profile-info-value">
+
+
+                <span>
+                  {{newIncident.numPVP}}
+                </span>
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="newIncident.interventionS" >
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Intervention' | translate }} Secours </div>
+
+              <div class="profile-info-value">
+
+                <span>
+                  {{newIncident.interventionS}}
+                </span>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="newIncident.interventionS">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">Heure arrivé</div>
+
+              <div class="profile-info-value">
+
+                <span>
+                  {{newIncident.heureArriveInterventionS}}
+                </span>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="newIncident.interventionS">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name">Heure départ</div>
+
+              <div class="profile-info-value">
+
+                <span>
+                  {{newIncident.heureDepartInterventionS}}
+                </span>
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-3" *ngIf="newIncident.interventionS">
+          <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+              <div class="profile-info-name"> N° PV </div>
+
+              <div class="profile-info-value">
+
+
+                <span>
+                  {{newIncident.numPVS}}
+                </span>
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+        <div class="col-md-12">
+
+
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Observation Intervention' | translate }} </div>
+
+              <div class="profile-info-value">
+
+
+                <span>
+                  {{newIncident.observation}}
+                </span>
+              </div>
+            </div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+      </div>
+      <hr>
+      <div class="row">
+
+        <div class="col-md-6" >
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Descriptifs des faits' | translate }} </div>
+
+              <div class="profile-info-value">
+
+                <span>
+                  {{newIncident.descriptifs}}
+                </span>
+              </div>
+            </div>
+
+
+          </div>
+
+          <!-- /section:pages/profile.info -->
+
+
+        </div>
+        <div class="col-md-6">
+
+
+          <div class="profile-user-info profile-user-info-striped">
+
+            <div class="profile-info-row">
+              <div class="profile-info-name">{{ 'ADMIN.Complément d’info / Adresses' | translate }} </div>
+
+              <div class="profile-info-value">
+
+                <span>
+                  {{newIncident.complementInfo}}
+                </span>
+              </div>
+            </div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+      </div>
+
+
+
+
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModal.close();">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+
+
+<modal #myModalInfo modalClass="modal-lg" >
+  <modal-header>
+    <h1>{{ 'ADMIN.Incident' | translate }}</h1>
+  </modal-header>
+  <modal-content>
+
+    <div class='table-responsive'>
+      <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+          <th>{{ 'ADMIN.Date/Heure' | translate }}</th>
+          <th>{{ 'ADMIN.Incident' | translate }}</th>
+          <th>{{ 'ADMIN.Type' | translate }}</th>
+          <th>{{ 'ADMIN.Emplacement' | translate }}</th>
+          <th>{{ 'ADMIN.Intervention' | translate }}</th>
+          <th>Photos</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr  *ngFor='let incident of listeIncidentsType' >
+          <td>
+            {{ incident.date.slice( 0, 10 )}} {{ incident.heure}}
+          </td>
+          <td>{{ incident.type}}</td>
+          <td>
+            <div *ngIf="incident.souincident">
+              {{ incident.souincident}}
+            </div>
+            <div *ngIf="!incident.souincident">
+              {{ incident.type}}
+            </div>
+
+          </td>
+          <td>
+            <div *ngIf="incident.emplacement">
+              {{ incident.emplacement.name}}
+            </div>
+
+          </td>
+
+          <td>
+            <div *ngIf="incident.interventionP">
+              Police
+            </div>
+            <div *ngIf="incident.interventionS">
+              Secours
+            </div>
+
+          </td>
+          <td class="text-center">
+            <div class="avatars-stack mt-h">
+              <div class="avatar avatar-xs" *ngFor='let photo of incident.photos'>
+                <img src="/assets/public/incidents/{{photo}}" class="img-avatar" >
+              </div>
+            </div>
+
+          </td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-primary" (click)="myModalInfo.close();">{{ 'ADMIN.Close' | translate }}</button>
+  </modal-footer>
+</modal>
+

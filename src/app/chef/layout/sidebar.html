@@ -1,0 +1,177 @@
+<div class="app-body">
+  <div class="sidebar">
+
+    <nav class="sidebar-nav">
+      <ul class="nav">
+
+
+
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active"  [routerLink]="['/chef/colis']"  >
+            <i class="fa fa-clock-o fa-lg m-t-2" style="background-color: #f59102;margin-top: 0px;color: white;"></i>
+            Liste demandes
+          </a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active"  [routerLink]="['/chef/consignes']"  >
+            <i class="fa fa-calendar fa-lg m-t-2" style="background-color: #009640;margin-top: 0px;color: white;"></i>
+            Liste banque
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/chef/agent']" >
+            <i class="fa fa-users fa-lg m-t-2" style="background-color: #2f4fdd;margin-top: 0px;color: white;"></i>
+            Agents</a>
+        </li>
+
+
+
+
+
+
+
+        <li class="divider"></li>
+
+
+
+
+      </ul>
+    </nav>
+
+
+
+  </div>
+
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- /.conainer-fluid -->
+  </main>
+
+
+</div>
+
+<footer class="app-footer">
+  <a href="">FinChain </a> &copy; 2018
+  <div class="float-right" *ngIf="isChat" >
+
+    <div class="chat-window-container">
+      <div class="chat-window col-sm-3" >
+        <div class="panel-container" style="height: 414px;">
+
+          <div class="chat-panel card card-default">
+            <div class="card-header" style="padding: 0.00rem 0.25rem;">
+              <i class="fa fa-comments fa-fw"></i>
+              Chat
+              <div class=" pull-right" >
+                <button id="chat-dropdown" type="button" class="btn btn-secondary btn-sm" (click)="closeChat();" >
+                  <span class="caret"><i class="icon-close" ></i></span>
+                </button>
+
+              </div>
+            </div>
+
+            <div class="card-block scrollbar" id="scrollbar">
+              <div *ngFor="let msg of ListChatUserChat  | reverse" >
+                <div class="left clearfix"  *ngIf="msg.idEnvoyeur==userchat._id" style="background-color: white;">
+                <span class="chat-img pull-left" *ngIf="msg.envoyeur.photo">
+                    <img src="/assets/public/avatar/{{msg.envoyeur.photo}}" alt="User Avatar" class="img-circle" style="border-radius: 2px;height: 28px;width: 28px;">
+                </span>
+                  <span class="chat-img pull-left" *ngIf="!msg.envoyeur.photo">
+                    <img src="/assets/public/avatar/avatar.png" alt="User Avatar" class="img-circle" style="border-radius: 2px;height: 28px;width: 28px;">
+                </span>
+                  <div class="chat-body clearfix">
+                    <div class="header">
+                      <strong class="primary-font">{{msg.envoyeur.nom}}</strong>
+                      <small class="pull-right text-muted">
+                        <i class="fa fa-clock-o fa-fw"></i> {{msg.dateCreation | amTimeAgo}}
+                      </small>
+                    </div>
+                    <p style="word-wrap: break-word;max-width: 397px;">
+                      {{msg.text}}
+                    </p>
+                  </div>
+                </div>
+                <div class="right clearfix"  *ngIf="msg.idEnvoyeur==userActuelle._id" style="background-color: white;">
+                <span class="chat-img pull-right"  *ngIf="msg.envoyeur.photo">
+                    <img src="/assets/public/avatar/{{msg.envoyeur.photo}}" alt="User Avatar" class="img-circle" style="border-radius: 2px;height: 28px;width: 28px;">
+                </span>
+                  <span class="chat-img pull-right" *ngIf="!msg.envoyeur.photo" >
+                    <img src="/assets/public/avatar/avatar.png" alt="User Avatar" class="img-circle" style="border-radius: 2px;height: 28px;width: 28px;">
+                </span>
+                  <div class="chat-body clearfix">
+                    <div class="header">
+                      <small class=" text-muted">
+                        <i class="fa fa-clock-o fa-fw"></i> {{msg.dateCreation | amTimeAgo}}
+                      </small>
+                      <strong class="pull-right primary-font">{{msg.envoyeur.nom}}</strong>
+
+                    </div>
+                    <p style="word-wrap: break-word;max-width: 397px;">
+                      {{msg.text}}
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+              <div style="visibility: hidden;height: 45px;">
+
+                <div class=" clearfix"  style="background-color: white;">
+                <span class="chat-img pull-right">
+
+                </span>
+                  <div class="chat-body clearfix">
+                    <div class="header">
+                      <small class=" text-muted">
+                        <i class="fa fa-clock-o fa-fw"></i>
+                      </small>
+                      <strong class="pull-right primary-font"></strong>
+
+                    </div>
+                    <p style="word-wrap: break-word;max-width: 397px;">
+
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+              <form  [formGroup]="addMessageForm" (ngSubmit)="addMessage()" >
+                <div class="input-group">
+
+                  <input id="btn-input" type="text" class="form-control input-sm" formControlName="text" placeholder="Type your message here...">
+                  <span class="input-group-btn">
+                <button class="btn btn-sm btn-info no-radius" id="btn-chat" type="submit"  [disabled]="!addMessageForm.valid">
+                    Send
+                </button>
+            </span>
+
+                </div>
+              </form>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+
+
+
+        </div></div></div>
+
+  </div>
+
+
+</footer>
+
+

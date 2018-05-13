@@ -1,0 +1,82 @@
+
+<div style="float: right;">
+  <img *ngIf='lg =="fr"'
+       src="/assets/public/images/login/i18n/en.png"
+       title="EN"
+       [style.width.px]='imageWidth'
+       (click)="onChangeLg('en')" >
+  <img *ngIf='lg =="en"'
+       src="/assets/public/images/login/i18n/fr.png"
+       title="FR"
+       [style.width.px]='imageWidth'
+       (click)="onChangeLg('fr')"
+  >
+</div>
+
+<div class="app flex-row align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card-group mb-0">
+          <div class="card p-2">
+            <div class="card-block">
+              <h1>{{ 'HOME.Login' | translate }}</h1>
+
+              <p class="text-muted" *ngIf="!errorMessage">{{ 'HOME.Connectez-vous à votre compte' | translate }}</p>
+
+              <div class="alert alert-danger mt-2" *ngIf="errorMessage">
+
+                <strong>{{ MessageErreur }}</strong>
+
+              </div>
+
+
+
+              <form role="form" class="bottom-75" [formGroup]="inscrikeyForm" (ngSubmit)="inscikey()" >
+
+
+                <div class="input-group mb-1">
+                                <span class="input-group-addon"><i class="icon-user"></i>
+                                </span>
+                  <input class="form-control" type="text"  formControlName="key" placeholder="key" minlength="120" maxlength="120"  >
+
+                </div>
+                <div class="input-group mb-2">
+                                <span class="input-group-addon"><i class="icon-lock"></i>
+                                </span>
+                  <input class="form-control" type="text" validateEqual="key"  formControlName="cofkey" placeholder="cofkey" minlength="12" maxlength="120"  >
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-6 text-right">
+                    <button [disabled]="!inscrikeyForm.valid" type="submit" class="btn btn-primary px-2">{{ 'HOME.Login' | translate }}</button>
+
+                  </div>
+                </div>
+
+              </form>
+
+
+
+
+
+
+            </div>
+          </div>
+          <div class="card card-inverse  py-3 hidden-md-down" style="width:44%">
+            <div class="card-block text-center">
+              <div>
+                <img src="/assets/img/logocc.jpg" style="width: 100%" />
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

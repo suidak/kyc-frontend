@@ -1,0 +1,134 @@
+
+<div  class="main-content" >
+  <div class="page-content">
+
+<div class="container-fluid">
+
+  <div class="row" *ngIf="isAdd">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-edit"></i>  {{ 'ADMIN.AJOUTERConsignes' | translate }}
+
+            </div>
+            <div class="card-block">
+              <div class="row" >
+                  <div class="col-md-12">
+
+                    <div *ngIf="alertsSuccess">
+                      <div  class="alert alert-success" role="alert" >
+                        <strong> {{ alertsSuccessMsg }}</strong>
+                      </div>
+
+                      <div class="modal-footer wizard-actions">
+                        <button class="btn btn-prev" (click)="prevEtap()">
+                          <i class="ace-icon fa fa-arrow-left"></i>
+                          {{ 'ADMIN.Prev' | translate }}
+
+                        </button>
+
+
+                      </div>
+
+                    </div>
+
+                    <div *ngIf="alertsDanger" class="alert alert-danger" role="alert">
+                      <strong> {{ alertsDangerMsg }}!</strong>
+                    </div>
+
+
+                      <form  [formGroup]="addConsigneTestForm" (ngSubmit)="addConsigne()" *ngIf="!alertsSuccess">
+
+                        <div class="form-group row">
+                          <div class="col-md-6" >
+                            <div class="profile-user-info profile-user-info-striped">
+                              <div class="profile-info-row">
+                                <div class="profile-info-name"> {{ 'ADMIN.Type' | translate }} </div>
+                                <div class="profile-info-value">
+                                  <select class="form-control " formControlName="ttype">
+                                    <option *ngFor="let x of listeTypeConsigne" [value]="x">{{x}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="profile-info-row">
+                                <div class="profile-info-name"> {{ 'ADMIN.Consignes' | translate }} </div>
+                                <div class="profile-info-value">
+                                  <textarea class="form-control" type="text"  formControlName="tremarque" value=""  style="height: 96px;"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6" >
+                            <div class="profile-user-info profile-user-info-striped">
+                              <div class="profile-info-row">
+                                <div class="profile-info-name"> {{ 'ADMIN.Date debut' | translate }} </div>
+
+                                <div class="profile-info-value">
+
+                                  <input class="form-control" type="date"
+                                         [ngModel]="datexxxxx | date:'yyyy-MM-dd'"
+
+                                         formControlName="tdateDebut"  >
+                                </div>
+                              </div>
+                              <div class="profile-info-row">
+                                <div class="profile-info-name"> {{ 'ADMIN.Date fin' | translate }} </div>
+
+                                <div class="profile-info-value">
+
+                                  <input class="form-control" type="date" [ngModel]="datexxxxx | date:'yyyy-MM-dd'"  formControlName="tdateFin"  >
+                                </div>
+                              </div>
+                              <div class="profile-info-row">
+                                <div class="profile-info-name"> {{ 'ADMIN.Etat' | translate }} </div>
+                                <div class="profile-info-value">
+                                  <select class="form-control " formControlName="tetat">
+                                    <option *ngFor="let e of listeEtatConsigne" [value]="e">{{e}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-12" style="text-align: right;" >
+                          <button class="btn btn-success" type="submit" [disabled]="!addConsigneTestForm.valid"><i class="fa fa-floppy-o"></i>
+                            {{ 'ADMIN.Enregistrer' | translate }}
+                          </button>
+                        </div>
+                      </form>
+
+
+
+
+
+
+                  </div>
+
+                </div>
+
+
+
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+  </div>
+
+
+
+</div>
+
+</div>
+</div>
