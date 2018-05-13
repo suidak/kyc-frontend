@@ -88,32 +88,6 @@ export class AppModule { }
 
 export class AppSettings {
 
-/*
-  public static BaseURL="https://demo2.positiftunisie.com";
-  public static URLServeur="https://demo2.positiftunisie.com:3002";
-  public static URLServeurSMTP='https://demo2.positiftunisie.com/serveurMail/index.php';
-  public static URLServeurSMTPevenement='https://demo2.positiftunisie.com/serveurMail/evenements.php';
-  public static  URLServeurSMTPcoli='https://demo2.positiftunisie.com/serveurMail/coli.php';
-  public static URLServeurSMTPincident='https://demo2.positiftunisie.com/serveurMail/incident.php';
-  public static URLServeurSMTPraportClient='https://demo2.positiftunisie.com/serveurMail/rapportPublication.php';
-  public static URLServeurSMTPsendmail='https://demo2.positiftunisie.com/serveurMail/sendmail.php';
-  public static URLServeurCodeBar='https://demo2.positiftunisie.com/generationCodeBar/index.php';
-  public static URLServeurInjectionUser='https://demo2.positiftunisie.com/generationCodeBar/injectionUser.php';
-
-*/
-
-/*
-  public static BaseURL="http://masterfact.eu";
-  public static URLServeur="http://masterfact.eu:8080";
-  public static URLServeurSMTP='http://demo.masterfact.eu/serveurMail/index.php';
-  public static URLServeurSMTPevenement='http://demo.masterfact.eu/serveurMail/evenements.php';
-  public static  URLServeurSMTPcoli='http://demo.masterfact.eu/serveurMail/coli.php';
-  public static URLServeurSMTPincident='http://demo.masterfact.eu/serveurMail/incident.php';
-  public static URLServeurSMTPraportClient='http://demo.masterfact.eu/serveurMail/rapportPublication.php';
-  public static URLServeurSMTPsendmail='http://demo.masterfact.eu/serveurMail/sendmail.php';
-  public static URLServeurCodeBar='http://demo.masterfact.eu/generationCodeBar/index.php';
-  public static URLServeurInjectionUser='http://demo.masterfact.eu/generationCodeBar/injectionUser.php';
-*/
 
 
 
@@ -132,19 +106,6 @@ export class AppSettings {
   public static URLServeurCodeBar='http://localhost:80/generationCodeBar/index.php';
   public static URLServeurInjectionUser='http://localhost:80/generationCodeBar/injectionUser.php';
 
-
-/*
-  public static BaseURL="http://masterfact.eu";
-  public static URLServeur="http://masterfact.eu:8080";
-  public static URLServeurSMTP='http://masterfact.eu:80/serveurMail/index.php';
- public static URLServeurSMTPevenement='http://masterfact.eu:80/serveurMail/evenements.php';
- public static  URLServeurSMTPcoli='http://masterfact.eu:80/serveurMail/coli.php';
- public static URLServeurSMTPincident='http://masterfact.eu:80/serveurMail/incident.php';
- public static URLServeurSMTPraportClient='http://masterfact.eu:80/serveurMail/rapportPublication.php';
-  public static URLServeurSMTPsendmail='http://masterfact.eu:80/serveurMail/sendmail.php';
- public static URLServeurCodeBar='http://masterfact.eu:80/generationCodeBar/index.php';
- public static URLServeurInjectionUser='http://masterfact.eu:80/generationCodeBar/injectionUser.php';
-*/
 
 
 
